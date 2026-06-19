@@ -9,6 +9,11 @@ val.txt
 domains_all.txt
 speedtest.txt
 speedtest_out.csv
+recheck.txt
+recheck_out.csv
+remaining.txt
+# stale/intermediate results dir; final deliverables force-added on completion
+ms_sso_results.csv
 # debug/throwaway scripts
 pw_debug.py
 pw_debug2.py
