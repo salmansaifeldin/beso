@@ -91,9 +91,15 @@ async function main(){
         detail = { pkgStatus: st, scopeCount: c };
         stillVuln = st === 404 && c === 0;
       } else {
+        // bare pkg: npm names are lowercase — check as-is AND lowercased so that
+        // casing-only mismatches (e.g. HTML_CodeSniffer) aren't false positives
         const st = await pkgStatus(f.pkg);
-        detail = { pkgStatus: st };
-        stillVuln = st === 404;
+        let stLower = st;
+        if (st === 404 && f.pkg !== f.pkg.toLowerCase()){
+          stLower = await pkgStatus(f.pkg.toLowerCase());
+        }
+        detail = { pkgStatus: st, pkgStatusLower: stLower };
+        stillVuln = st === 404 && stLower === 404;
       }
       const srcOk = await urlOk(f.src);
       const rel = related(scope || f.pkg, r.domain);
