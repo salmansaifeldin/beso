@@ -7,6 +7,8 @@ sample.txt
 known.txt
 val.txt
 domains_all.txt
+speedtest.txt
+speedtest_out.csv
 # debug/throwaway scripts
 pw_debug.py
 pw_debug2.py

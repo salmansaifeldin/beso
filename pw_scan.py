@@ -18,8 +18,24 @@ Classification:
   generic_sso -> a generic SSO/SAML option (no labelled Microsoft button).
   none        -> neither found.
 """
-import sys, re, csv, time, os, signal
+import sys, re, csv, time, os, signal, socket
 from playwright.sync_api import sync_playwright
+
+_resolve_cache = {}
+
+
+def resolves(host):
+    """Fast DNS check (cached) so we skip dead/nonexistent hosts instantly."""
+    if host in _resolve_cache:
+        return _resolve_cache[host]
+    ok = False
+    try:
+        socket.getaddrinfo(host, 443, proto=socket.IPPROTO_TCP)
+        ok = True
+    except Exception:
+        ok = False
+    _resolve_cache[host] = ok
+    return ok
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
@@ -176,8 +192,8 @@ def analyze(browser, domain, verbose=False):
           "evidence": "", "login_url": "", "final_url": ""}
     ctx = browser.new_context(ignore_https_errors=True, user_agent=UA,
                               viewport={"width": 1280, "height": 900})
-    ctx.set_default_navigation_timeout(22000)
-    ctx.set_default_timeout(8000)
+    ctx.set_default_navigation_timeout(13000)
+    ctx.set_default_timeout(4000)
     try:
         ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined});"
                             "window.chrome={runtime:{}};")
@@ -190,10 +206,10 @@ def analyze(browser, domain, verbose=False):
     except Exception:
         pass
 
-    def reach(url, page):
+    def reach(url, page, wait=1600):
         try:
             page.goto(url, wait_until="domcontentloaded")
-            page.wait_for_timeout(2500)
+            page.wait_for_timeout(wait)
             return True
         except Exception:
             return False
@@ -201,20 +217,40 @@ def analyze(browser, domain, verbose=False):
     page = ctx.new_page()
     page.on("request", lambda r: net.append(r.url))
     try:
+        # 0. fast DNS gate: if neither apex nor www resolves, bail immediately
+        apex_ok = resolves(domain)
+        www_ok = resolves("www." + domain)
+        if not apex_ok and not www_ok:
+            ev["evidence"] = "ERR:dns"
+            try:
+                ctx.close()
+            except Exception:
+                pass
+            if verbose:
+                print(f"{domain:32s} {'none':11s} ERR:dns", flush=True)
+            return ev
         # 1. homepage -> discover login link
         login_url = None
-        for base in (f"https://{domain}/", f"https://www.{domain}/", f"http://{domain}/"):
+        bases = []
+        if apex_ok:
+            bases.append(f"https://{domain}/")
+        if www_ok:
+            bases.append(f"https://www.{domain}/")
+        if apex_ok:
+            bases.append(f"http://{domain}/")
+        for base in bases:
             if reach(base, page):
                 login_url = get_login_url(page, domain)
                 break
-        # 2. candidate login urls
+        # 2. candidate login urls (DNS-gate subdomain guesses)
         cands = []
         if login_url:
             cands.append(login_url)
-        cands += [f"https://{domain}/login", f"https://{domain}/signin",
-                  f"https://app.{domain}/login", f"https://accounts.{domain}/login",
-                  f"https://login.{domain}/", f"https://secure.{domain}/login",
-                  f"https://my.{domain}/login"]
+        cands += [f"https://{domain}/login", f"https://{domain}/signin"]
+        for sub in ("app", "accounts", "login", "secure", "my"):
+            host = f"{sub}.{domain}"
+            if resolves(host):
+                cands.append(f"https://{host}/login")
         seen = set()
         reached_login = False
         for cu in cands:
@@ -233,7 +269,7 @@ def analyze(browser, domain, verbose=False):
                 ev["category"] = "microsoft"; ev["evidence"] = ms
                 break
             # try expanders
-            for _ in range(3):
+            for _ in range(2):
                 clicked = False
                 try:
                     els = page.query_selector_all(AUTH_SEL)
@@ -243,7 +279,7 @@ def analyze(browser, domain, verbose=False):
                     lab = label_of(el).lower()
                     if lab and len(lab) < 40 and EXPAND_RE.search(lab) and not MS_EXCLUDE.search(lab):
                         try:
-                            el.click(timeout=3000); page.wait_for_timeout(1500); clicked = True
+                            el.click(timeout=3000); page.wait_for_timeout(1000); clicked = True
                         except Exception:
                             pass
                         break
