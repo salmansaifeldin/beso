@@ -41,12 +41,35 @@ async function scopeCount(scope){
       && o.package.name.startsWith(scope+'/')).length;
   } catch(_){ return -1; }
 }
-async function urlOk(src){
-  // src = "github:slug/repo/branch/path"
+function srcRawUrl(src){
   const m = /^github:(.+)$/.exec(src||'');
-  if (!m) return null;
-  const url = `https://raw.githubusercontent.com/${m[1]}`;
-  try { const r = await fetchT(url); return r.ok; } catch(_){ return false; }
+  if (m) return `https://raw.githubusercontent.com/${m[1]}`;
+  const g = /^gitlab:(.+?)\/(.+?)\/(.+?)\/(.+)$/.exec(src||'');
+  if (g) return `https://gitlab.com/${g[1]}/${g[2]}/-/raw/${g[3]}/${g[4]}`;
+  return null;
+}
+async function getSrcText(src){
+  const url = srcRawUrl(src);
+  if (!url) return null;
+  try { const r = await fetchT(url); return r.ok ? await r.text() : null; }
+  catch(_){ return null; }
+}
+// version spec that does NOT resolve from the public npm registry -> not a
+// confusion target (git shorthand owner/repo, workspace/file/link/url/alias...)
+function isNonRegistrySpec(v){
+  if (typeof v !== 'string') return false;
+  v = v.trim();
+  return /^(workspace:|file:|link:|portal:|patch:|catalog:|npm:|git|github:|gitlab:|bitbucket:|https?:|ssh:)/i.test(v)
+      || v.includes('://')
+      || /^[\w.-]+\/[\w.-]+(#.+)?$/.test(v);   // GitHub shorthand "owner/repo[#ref]"
+}
+// look up the declared version of pkg inside a package.json text
+function declaredSpec(jsonText, pkg){
+  let j; try { j = JSON.parse(jsonText); } catch(_){ return undefined; }
+  for (const k of ['dependencies','devDependencies','peerDependencies','optionalDependencies']){
+    if (j[k] && Object.prototype.hasOwnProperty.call(j[k], pkg)) return String(j[k][pkg]);
+  }
+  return undefined;
 }
 
 function related(scope, domain){
@@ -78,9 +101,22 @@ async function main(){
   let n = 0;
   for (const r of rows){
     const out = { domain: r.domain, confirmed: [] };
+    // cache manifest text per src within a domain
+    const srcTextCache = new Map();
     for (const f of r.findings){
       const scope = f.pkg.startsWith('@') ? f.pkg.split('/')[0] : null;
       let stillVuln = false, detail = {};
+
+      // re-read the manifest and inspect the declared version spec; non-registry
+      // specs (git shorthand, workspace, url, alias) are NOT confusion targets
+      if (!f.scopeDecl && f.src && /package\.json$/.test(f.src)){
+        if (!srcTextCache.has(f.src)) srcTextCache.set(f.src, await getSrcText(f.src));
+        const txt = srcTextCache.get(f.src);
+        const spec = txt ? declaredSpec(txt, f.pkg) : undefined;
+        if (spec !== undefined && isNonRegistrySpec(spec)){
+          continue;   // skip: dependency is not pulled from public npm
+        }
+      }
       if (f.scopeDecl || (scope && f.pkg === scope)){
         const c = await scopeCount(scope || f.pkg);
         detail = { scopeCount: c };
@@ -101,11 +137,13 @@ async function main(){
         detail = { pkgStatus: st, pkgStatusLower: stLower };
         stillVuln = st === 404 && stLower === 404;
       }
-      const srcOk = await urlOk(f.src);
+      const srcOk = srcRawUrl(f.src) ? true : null;   // provenance recorded at scan time
       const rel = related(scope || f.pkg, r.domain);
+      const isBare = !f.pkg.startsWith('@');
       if (stillVuln){
         out.confirmed.push({ pkg: f.pkg, src: f.src, srcReachable: srcOk,
-          relatedToDomain: rel, review: (!rel || srcOk===false), ...detail });
+          relatedToDomain: rel, bare: isBare,
+          review: (!rel || isBare), ...detail });
       }
     }
     if (out.confirmed.length){ confirmed.push(out); ws.write(JSON.stringify(out)+'\n'); }
