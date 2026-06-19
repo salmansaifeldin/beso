@@ -36,12 +36,12 @@ md += '## ⚠️ Vulnerable (unclaimed packages — confusable)\n\n';
 if (!vuln.length){
   md += '_None found yet._\n\n';
 } else {
-  md += '| Company | Unclaimed package(s) | Type |\n|---|---|---|\n';
+  md += '| Company | Unclaimed package(s) | Type | Source (repo/file) |\n|---|---|---|---|\n';
   for (const r of vuln){
     for (const f of r.findings){
       const type = f.scopeDecl ? 'scope decl (.npmrc)'
                  : (f.pkg.startsWith('@') ? 'scoped pkg' : 'bare pkg');
-      md += `| ${r.domain} | \`${f.pkg}\` | ${type} |\n`;
+      md += `| ${r.domain} | \`${f.pkg}\` | ${type} | \`${f.src || '?'}\` |\n`;
     }
   }
   md += '\n';

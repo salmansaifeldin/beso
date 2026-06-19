@@ -210,7 +210,11 @@ function rawUrl(host, slug, repo, branch, path){
     : `https://gitlab.com/${slug}/${repo}/-/raw/${branch}/${path}`;
 }
 
-async function readRepoManifests(host, slug, repo, depNames){
+// depSrc: Map<name, "host:slug/repo/branch/path">  (first source wins)
+async function readRepoManifests(host, slug, repo, depSrc){
+  const add = (name, branch, path) => {
+    if (!depSrc.has(name)) depSrc.set(name, `${host}:${slug}/${repo}/${branch}/${path}`);
+  };
   // 1. find the live branch by probing root package.json on main then master
   let liveBranch = null, rootPkg = null;
   for (const branch of BRANCHES){
@@ -220,7 +224,7 @@ async function readRepoManifests(host, slug, repo, depNames){
     if (res.ok && res.text){ liveBranch = branch; rootPkg = res.text; break; }
   }
   if (!liveBranch) return;                       // no root package.json -> skip repo
-  for (const d of depsFromPackageJson(rootPkg)) depNames.add(d);
+  for (const d of depsFromPackageJson(rootPkg)) add(d, liveBranch, 'package.json');
 
   // 2. on the confirmed branch only, probe a few extra manifests + .npmrc
   for (const path of EXTRA_PATHS){
@@ -229,9 +233,9 @@ async function readRepoManifests(host, slug, repo, depNames){
     catch(_){ continue; }
     if (!res.ok || !res.text) continue;
     if (path.endsWith('.npmrc')){
-      for (const s of scopesFromNpmrc(res.text)) depNames.add(s + '/_scope');
+      for (const s of scopesFromNpmrc(res.text)) add(s + '/_scope', liveBranch, path);
     } else {
-      for (const d of depsFromPackageJson(res.text)) depNames.add(d);
+      for (const d of depsFromPackageJson(res.text)) add(d, liveBranch, path);
     }
   }
 }
@@ -243,26 +247,26 @@ async function scanDomain(domain){
   try {
     const slugs = slugsFromDomain(domain);
     out.slugs = slugs;
-    const depNames = new Set();
+    const depSrc = new Map();
 
     for (const slug of slugs){
       const ghRepos = await githubRepos(slug);
       if (ghRepos.length){
         out.gh[slug] = ghRepos;
         out.repos += ghRepos.length;
-        for (const repo of ghRepos) await readRepoManifests('github', slug, repo, depNames);
+        for (const repo of ghRepos) await readRepoManifests('github', slug, repo, depSrc);
       }
       const glRepos = await gitlabRepos(slug);
       if (glRepos.length){
         out.gl[slug] = glRepos;
         out.repos += glRepos.length;
-        for (const repo of glRepos) await readRepoManifests('gitlab', slug, repo, depNames);
+        for (const repo of glRepos) await readRepoManifests('gitlab', slug, repo, depSrc);
       }
       if (out.repos > 0) break; // found the org under this slug; stop guessing
     }
 
-    out.deps = depNames.size;
-    for (const name of depNames){
+    out.deps = depSrc.size;
+    for (const [name, src] of depSrc){
       const real = name.endsWith('/_scope') ? name.slice(0, -7) : name;
       const isScopeOnly = name.endsWith('/_scope');
       let cls;
@@ -273,9 +277,9 @@ async function scanDomain(domain){
         cls = await classify(real);
       }
       if (cls === 'VULNERABLE'){
-        out.findings.push({ pkg: real, class: cls, scopeDecl: isScopeOnly });
+        out.findings.push({ pkg: real, class: cls, scopeDecl: isScopeOnly, src });
       } else if (cls === 'SCOPE_OWNED'){
-        out.lowrisk.push({ pkg: real, class: cls, scopeDecl: isScopeOnly });
+        out.lowrisk.push({ pkg: real, class: cls, scopeDecl: isScopeOnly, src });
       }
     }
   } catch(e){ out.error = String(e && e.message || e); }
