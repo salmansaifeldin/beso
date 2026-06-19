@@ -1,0 +1,18 @@
+# crawl working dirs & intermediate artifacts
+scan_work/
+scan_main.log
+*.log
+# scratch/test inputs
+sample.txt
+known.txt
+val.txt
+domains_all.txt
+# debug/throwaway scripts
+pw_debug.py
+pw_debug2.py
+pw_test.py
+ms_sso_scan.py
+# partial result files from early HTTP pass
+microsoft_sso_domains.txt
+microsoft_sso_review.txt
+val_results.csv
