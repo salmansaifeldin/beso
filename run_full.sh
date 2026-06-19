@@ -33,14 +33,16 @@ python3 - "$WORKDIR" "$SHARDS" <<'PY'
 import sys, csv, glob, os
 wd, n = sys.argv[1], int(sys.argv[2])
 rows=[]
-for i in range(n):
-    fn=f"{wd}/out_{i}.csv"
-    if not os.path.exists(fn): continue
+srcs=glob.glob(f"{wd}/out_*.csv")
+mp=f"{wd}/_master.csv"
+if os.path.exists(mp): srcs=[mp]+srcs
+seen=set()
+for fn in srcs:
     with open(fn) as f:
         r=list(csv.reader(f))
     for row in r:
-        if row and row[0]!="domain":
-            rows.append(row)
+        if row and row[0]!="domain" and row[0] not in seen:
+            seen.add(row[0]); rows.append(row)
 with open("/home/user/beso/ms_sso_results.csv","w",newline="") as f:
     w=csv.writer(f)
     w.writerow(["domain","category","confirmed","evidence","login_url","final_url"])

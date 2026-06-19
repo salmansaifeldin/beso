@@ -372,8 +372,13 @@ def main():
     newfile = not os.path.exists(outfile)
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, args=[
-            "--no-sandbox", "--disable-dev-shm-usage",
-            "--disable-blink-features=AutomationControlled"])
+            "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+            "--disable-blink-features=AutomationControlled",
+            "--disable-features=site-per-process,IsolateOrigins,TranslateUI,BackForwardCache",
+            "--disable-extensions", "--mute-audio",
+            "--disable-background-timer-throttling",
+            "--disable-renderer-backgrounding",
+            "--disable-backgrounding-occluded-windows"])
         with open(outfile, "a", newline="") as out:
             w = csv.writer(out)
             if newfile:
