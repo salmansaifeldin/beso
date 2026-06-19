@@ -89,6 +89,32 @@ LOGIN_HREF_SKIP = re.compile(r"/training|/learn|/blog|/docs|/support|/community|
 
 AUTH_SEL = "button, a, [role=button], input[type=submit], input[type=button], div[tabindex]"
 
+# third-party analytics/ads/video hosts that burn CPU but never gate a login
+# form. (Deliberately NOT blocking recaptcha, consent, or CSS, which some
+# login pages need to render their provider buttons.)
+BLOCK_HOSTS = re.compile(
+    r"google-analytics|googletagmanager|doubleclick|googlesyndication|"
+    r"facebook\.com/tr|connect\.facebook|"
+    r"hotjar|fullstory|mouseflow|mixpanel|"
+    r"criteo|taboola|outbrain|adroll|quantserve|"
+    r"scorecardresearch|youtube\.com|ytimg|vimeo|wistia|"
+    r"tiktok|snapchat|pinterest|ads-twitter", re.I)
+
+BLOCK_TYPES = ("image", "media", "font")
+
+
+def _route(route):
+    try:
+        req = route.request
+        if req.resource_type in BLOCK_TYPES or BLOCK_HOSTS.search(req.url):
+            return route.abort()
+        return route.continue_()
+    except Exception:
+        try:
+            return route.continue_()
+        except Exception:
+            return
+
 
 def label_of(el):
     try:
@@ -201,8 +227,7 @@ def analyze(browser, domain, verbose=False):
         pass
     net = []
     try:
-        ctx.route("**/*", lambda r: (r.abort() if r.request.resource_type in
-                  ("image", "media", "font") else r.continue_()))
+        ctx.route("**/*", _route)
     except Exception:
         pass
 
@@ -258,7 +283,7 @@ def analyze(browser, domain, verbose=False):
                 continue
             seen.add(cu)
             net.clear()
-            if not reach(cu, page):
+            if not reach(cu, page, wait=2800):
                 continue
             ev["login_url"] = cu
             ev["final_url"] = page.url
