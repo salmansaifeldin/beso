@@ -23,3 +23,7 @@ ms_sso_scan.py
 microsoft_sso_domains.txt
 microsoft_sso_review.txt
 val_results.csv
+
+# smoke test scratch
+smoke.txt
+smoke_out.csv

@@ -381,6 +381,22 @@ def analyze(browser, domain, verbose=False):
     return ev
 
 
+LAUNCH_ARGS = [
+    "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+    "--disable-blink-features=AutomationControlled",
+    "--disable-features=site-per-process,IsolateOrigins,TranslateUI,BackForwardCache",
+    "--disable-extensions", "--mute-audio",
+    "--disable-background-timer-throttling",
+    "--disable-renderer-backgrounding",
+    "--disable-backgrounding-occluded-windows"]
+
+RECYCLE_EVERY = 40  # relaunch the browser periodically to avoid memory bloat
+
+
+def make_browser(p):
+    return p.chromium.launch(headless=True, args=LAUNCH_ARGS)
+
+
 def main():
     infile = sys.argv[1]
     outfile = sys.argv[2] if len(sys.argv) > 2 else "pw_results.csv"
@@ -396,25 +412,46 @@ def main():
     todo = [d for d in domains if d not in done]
     newfile = not os.path.exists(outfile)
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, args=[
-            "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
-            "--disable-blink-features=AutomationControlled",
-            "--disable-features=site-per-process,IsolateOrigins,TranslateUI,BackForwardCache",
-            "--disable-extensions", "--mute-audio",
-            "--disable-background-timer-throttling",
-            "--disable-renderer-backgrounding",
-            "--disable-backgrounding-occluded-windows"])
+        browser = make_browser(p)
+        since = 0
         with open(outfile, "a", newline="") as out:
             w = csv.writer(out)
             if newfile:
                 w.writerow(["domain", "category", "confirmed", "evidence", "login_url", "final_url"])
                 out.flush()
-            for i, d in enumerate(todo):
-                ev = analyze(browser, d, verbose=verbose)
+            for d in todo:
+                # periodic recycle to bound memory
+                if since >= RECYCLE_EVERY:
+                    try:
+                        browser.close()
+                    except Exception:
+                        pass
+                    browser = make_browser(p)
+                    since = 0
+                try:
+                    ev = analyze(browser, d, verbose=verbose)
+                except Exception as e:
+                    # browser/context likely died: relaunch and retry once
+                    try:
+                        browser.close()
+                    except Exception:
+                        pass
+                    try:
+                        browser = make_browser(p)
+                        since = 0
+                        ev = analyze(browser, d, verbose=verbose)
+                    except Exception as e2:
+                        ev = {"domain": d, "category": "none", "confirmed": "",
+                              "evidence": "ERR2:" + str(e2)[:40], "login_url": "",
+                              "final_url": ""}
+                since += 1
                 w.writerow([ev["domain"], ev["category"], ev["confirmed"],
                             ev["evidence"], ev["login_url"], ev["final_url"]])
                 out.flush()
-        browser.close()
+        try:
+            browser.close()
+        except Exception:
+            pass
 
 
 if __name__ == "__main__":

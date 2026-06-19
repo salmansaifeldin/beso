@@ -18,10 +18,24 @@ for f in files: f.close()
 print(f"split {len(doms)} domains into {n} shards")
 PY
 
+# A worker keeps re-running pw_scan.py (which resumes by skipping done rows)
+# until its whole shard is covered, so a crashed browser just restarts.
+run_worker() {
+  local shard="$1" out="$2" log="$3"
+  local total done
+  total=$(grep -vc '^$' "$shard")
+  for attempt in $(seq 1 80); do
+    python3 /home/user/beso/pw_scan.py "$shard" "$out" >> "$log" 2>&1
+    done=$(grep -vc '^domain,' "$out" 2>/dev/null || echo 0)
+    [ "$done" -ge "$total" ] && break
+    echo "[supervisor] $shard restart #$attempt (done=$done/$total)" >> "$log"
+    sleep 2
+  done
+}
+
 pids=()
 for i in $(seq 0 $((SHARDS-1))); do
-  python3 /home/user/beso/pw_scan.py "$WORKDIR/shard_${i}.txt" "$WORKDIR/out_${i}.csv" \
-      > "$WORKDIR/log_${i}.txt" 2>&1 &
+  run_worker "$WORKDIR/shard_${i}.txt" "$WORKDIR/out_${i}.csv" "$WORKDIR/log_${i}.txt" &
   pids+=($!)
 done
 echo "launched ${#pids[@]} workers: ${pids[*]}"
