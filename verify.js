@@ -57,11 +57,21 @@ function related(scope, domain){
   return s.includes(d) || d.includes(s) || s.slice(0,4) === d.slice(0,4);
 }
 
+// non-npm ecosystems that legitimately 404 on the npm registry and must NOT be
+// reported as npm dependency-confusion (Unity UPM / Java / .NET reverse-DNS ids)
+const NON_NPM_RE = /^(com|org|net|io|app|dev|co|unity|systems?)\.[a-z0-9][a-z0-9.-]+$/i;
+function isNonNpm(pkg){ return !pkg.startsWith('@') && NON_NPM_RE.test(pkg); }
+
 async function main(){
   const rows = [];
   for (const line of fs.readFileSync(IN,'utf8').split('\n')){
     if (!line.trim()) continue;
-    try { const o = JSON.parse(line); if ((o.findings||[]).length) rows.push(o); } catch(_){}
+    try {
+      const o = JSON.parse(line);
+      if (!(o.findings||[]).length) continue;
+      o.findings = o.findings.filter(f => !isNonNpm(f.pkg));   // drop Unity/Java ids
+      if (o.findings.length) rows.push(o);
+    } catch(_){}
   }
   const ws = fs.createWriteStream(OUTJSON);
   const confirmed = [];
