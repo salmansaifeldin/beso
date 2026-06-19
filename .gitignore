@@ -3,3 +3,4 @@ sample*.txt
 sample*-results.jsonl
 *.log
 repo-results.jsonl
+repo-results.snapshot.jsonl
