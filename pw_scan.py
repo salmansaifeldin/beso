@@ -18,22 +18,31 @@ Classification:
   generic_sso -> a generic SSO/SAML option (no labelled Microsoft button).
   none        -> neither found.
 """
-import sys, re, csv, time, os, signal, socket
+import sys, re, csv, time, os, signal, socket, threading
 from playwright.sync_api import sync_playwright
 
 _resolve_cache = {}
 
 
 def resolves(host):
-    """Fast DNS check (cached) so we skip dead/nonexistent hosts instantly."""
+    """DNS check with a hard 5s timeout so a hung getaddrinfo can never
+    stall a worker. Cached. Runs the lookup in a daemon thread; if it does
+    not finish in time we treat the host as unresolved and move on."""
     if host in _resolve_cache:
         return _resolve_cache[host]
-    ok = False
-    try:
-        socket.getaddrinfo(host, 443, proto=socket.IPPROTO_TCP)
-        ok = True
-    except Exception:
-        ok = False
+    result = {"ok": False}
+
+    def _lookup():
+        try:
+            socket.getaddrinfo(host, 443, proto=socket.IPPROTO_TCP)
+            result["ok"] = True
+        except Exception:
+            result["ok"] = False
+
+    t = threading.Thread(target=_lookup, daemon=True)
+    t.start()
+    t.join(5.0)
+    ok = result["ok"] if not t.is_alive() else False
     _resolve_cache[host] = ok
     return ok
 
@@ -283,7 +292,7 @@ def analyze(browser, domain, verbose=False):
                 continue
             seen.add(cu)
             net.clear()
-            if not reach(cu, page, wait=2800):
+            if not reach(cu, page, wait=(2100 if os.environ.get("FAST") == "1" else 2800)):
                 continue
             ev["login_url"] = cu
             ev["final_url"] = page.url
@@ -317,8 +326,8 @@ def analyze(browser, domain, verbose=False):
                     break
             if ev["category"] == "microsoft":
                 break
-            # email-first probe
-            if not ms:
+            # email-first probe (skipped in FAST mode for speed)
+            if not ms and os.environ.get("FAST") != "1":
                 try:
                     email = page.query_selector("input[type=email], input[name*=email i], input[id*=email i], input[autocomplete=username]")
                     pwd = page.query_selector("input[type=password]")
@@ -411,6 +420,7 @@ def main():
                     done.add(row[0])
     todo = [d for d in domains if d not in done]
     newfile = not os.path.exists(outfile)
+
     with sync_playwright() as p:
         browser = make_browser(p)
         since = 0
