@@ -27,3 +27,7 @@ val_results.csv
 # smoke test scratch
 smoke.txt
 smoke_out.csv
+
+# interim partial deliverables (final versions force-added at completion)
+*.PARTIAL.txt
+*.PARTIAL.csv
