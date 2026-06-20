@@ -31,3 +31,10 @@ smoke_out.csv
 # interim partial deliverables (final versions force-added at completion)
 *.PARTIAL.txt
 *.PARTIAL.csv
+fastval.txt
+fastval_out.csv
+stucktest.txt
+stucktest_out.csv
+speedtest.txt
+speedtest_out.csv
+sample.txt
