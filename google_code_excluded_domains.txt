@@ -6,6 +6,7 @@ adsmurai.com
 adwayusa.com
 airfocus.io
 aitrillion.com
+akk.io
 akuity.io
 alkymi.io
 alphadesign.ai
@@ -13,6 +14,7 @@ amboss.com
 ambrook.com
 animaapp.com
 antler.co
+anyformat.ai
 appcues.com
 appearhere.co.uk
 appfollow.io
@@ -24,6 +26,7 @@ aquasana.com
 archive.com
 arize.com
 arnica.io
+astronomer.io
 atmen.co
 atroposhealth.com
 attaindata.io
@@ -66,12 +69,14 @@ clearstory.build
 cledara.com
 clickhouse.com
 clockwork.ai
+clora.com
 cloudinary.com
 clowdy.com
 cnaught.com
 codat.io
 cofertility.com
 cognitivevr.co
+colossyan.com
 commonroom.io
 companisto.com
 companycam.com
@@ -81,8 +86,10 @@ conceptboard.eu
 confidotech.com
 contentful.com
 contexttravel.com
+copper.com
 copyleaks.com
 cord.tech
+coschedule.com
 coupler.io
 creatopy.com
 cribl.io
@@ -97,6 +104,7 @@ deliverr.com
 demodesk.com
 destacame.cl
 devcycle.com
+devpost.com
 digiphy.it
 diib.com
 disclo.com
@@ -127,6 +135,7 @@ fairygodboss.com
 fan.school
 fanbasis.com
 feast-it.com
+feathery.io
 feathery.tech
 findmyfactory.eu
 fintechstudios.com
@@ -146,8 +155,10 @@ formitable.com
 framebridge.com
 franzy.com
 fraud0.com
+fruitcast.co.uk
 gable.to
 gadget.dev
+gameanalytics.com
 ganttic.com
 garten.co
 gengo.com
@@ -168,12 +179,14 @@ gun.io
 gusto.com
 happeo.com
 harperdb.io
+hatcher.com
 hellodivorce.com
 heymarvin.com
 heypongo.com
 highnote.fm
 hightouch.com
 hightouch.io
+hiive.com
 hiivemarkets.com
 hirasmus.com
 homebound.com
@@ -186,8 +199,10 @@ hrduo.com
 humata.ai
 incorta.com
 infinigods.com
+infoshare.pl
 inhabitr.com
 insighthealth.ai
+insightly.com
 inspace.app
 itsdart.com
 ivy.com
@@ -243,9 +258,11 @@ meetleo.co
 meetleo.com
 mento.co
 messari.io
+metadata.io
 metaplane.dev
 metaview.ai
 mmhmm.app
+mobilize2020.org
 mobilizeamerica.io
 mogenius.com
 mogul.sg
@@ -270,6 +287,7 @@ nowescape.com
 omniafishing.com
 oncehub.com
 onxmaps.com
+openpolicy.co
 openpolicygroup.com
 opensense.com
 opper.ai
@@ -280,9 +298,11 @@ othersideai.com
 output.com
 parentsquare.com
 partnerize.com
+payflows.io
 pearler.com
 pensero.ai
 perlego.com
+picovoice.ai
 pimento.design
 pipefy.com
 pipelinecrm.com
@@ -297,6 +317,7 @@ polymersearch.com
 powertofly.com
 ppcbee.com
 pray.com
+precisionostech.com
 prepr.io
 prezi.com
 priorilegal.com
@@ -313,10 +334,12 @@ prosights.co
 prosperops.com
 protopie.io
 provi.com
+proxima.ai
 publicinput.com
 pump.co
 punchlist.com
 purpose-green.com
+pushpushgo.com
 qase.io
 qdrant.tech
 qualaroo.com
@@ -324,6 +347,7 @@ quartzy.com
 questionpro.com
 questportal.com
 quickcode.ai
+quilter.ai
 qwaya.com
 radiusagent.com
 rainforestpay.com
@@ -332,6 +356,7 @@ re-tell.ai
 realeye.io
 realmadrid.es
 recruiterflow.com
+redbooth.com
 redbrickai.com
 reevo.ai
 rembrand.com
@@ -347,6 +372,7 @@ riipen.com
 rimuut.com
 ringover.com
 riverside.fm
+rlx.jp
 rosebud.app
 rowzero.io
 rydoo.com
@@ -374,6 +400,7 @@ simplilearn.com
 simplyk.io
 sittercity.com
 smartcar.com
+sndmart.com
 socialwifi.com
 socprime.com
 soundstripe.com
@@ -382,6 +409,7 @@ spinach.io
 spiro.ai
 springpod.com
 sqldbm.com
+sram.com
 starchive.io
 startree.ai
 steadybit.com
@@ -399,6 +427,7 @@ supervise.ly
 supliful.com
 surveymonkey.com
 svix.com
+swiftype.com
 sybill.ai
 synup.com
 tab-trader.com
@@ -429,6 +458,7 @@ trend.io
 tribaja.co
 tropicapp.io
 truelayer.com
+truework.com
 trusspayments.com
 trustworthy.com
 trycaddi.com
@@ -441,6 +471,7 @@ unito.io
 upcall.com
 uploadcare.com
 upvest.cz
+useomnia.com
 userpilot.co
 userpilot.io
 uxpin.com
@@ -450,7 +481,9 @@ vartana.co
 vartana.com
 vendasta.com
 venngage.com
+verygoodsecurity.com
 viam.com
+vicarius.io
 vidyard.com
 virbela.com
 vlex.com
@@ -460,6 +493,7 @@ vurvey.co
 walnut.io
 wanda.space
 warmmusic.net
+way2b1.com
 webrazzi.com
 webuycars.co.za
 wedgehr.com
@@ -473,9 +507,11 @@ wiremock.io
 withpact.com
 withroam.com
 wordsmith.ai
+workato.com
 workpatterns.com
 wrapbook.com
 wuzzuf.net
+xometry.com
 xopero.com
 year13.com.au
 yodel.co.uk
@@ -490,3 +526,4 @@ zocks.io
 zoom.com
 zoom.us
 zoominfo.com
+zyte.com
