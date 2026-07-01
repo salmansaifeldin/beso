@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /home/user/beso
 DUR="${1:-560}"
-WD=scan_work_g2; SRC=newlist_5k.txt
+WD=scan_work_g2; SRC=newlist_fresh.txt
 python3 - "$WD" "$SRC" <<'PY'
 import csv, glob, os, sys
 WD, SRC = sys.argv[1], sys.argv[2]
