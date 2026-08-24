@@ -474,6 +474,9 @@ def analyze(browser, domain, verbose=False):
 
 LAUNCH_ARGS = [
     "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+    # Some egress proxies reset Chromium's TLS 1.3 ClientHello; cap at TLS 1.2
+    # so navigations succeed through a MITM proxy (harmless when direct).
+    "--ssl-version-max=tls1.2",
     "--disable-blink-features=AutomationControlled",
     "--disable-features=site-per-process,IsolateOrigins,TranslateUI,BackForwardCache",
     "--disable-extensions", "--mute-audio",
