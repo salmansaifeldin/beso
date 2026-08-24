@@ -1,5 +1,5 @@
 domain,flow,confirmed,evidence,login_url,final_url
-19pine.ai,google_unknown,,gsi_only,https://19pine.ai/login,https://www.19pine.ai/login
+19pine.ai,code,,response_type=code,https://www.19pine.ai/app/login,
 adapt.com,none,,,https://app.adapt.com/login,https://app.adapt.com/login
 adaptionlabs.ai,none,,,https://adaptionlabs.ai/login,https://adaptionlabs.ai/login
 agentmail.to,none,,,https://console.agentmail.to,https://console.agentmail.to/sign-up
@@ -9,7 +9,7 @@ ancher.ai,none,,,https://app.ancher.ai,https://app.ancher.ai/login?redirect=%2Fn
 arbio.com,jwt,yes,response_type=id_token,https://portal.arbio.com/login,https://portal.arbio.com/login
 arena.ai,none,,,https://arena.ai/login,https://arena.ai/login
 artie.com,none,,,https://artie.com/signin,https://artie.com/signin
-asgardeo.io,google_unknown,,gsi_only,https://asgardeo.io/login,https://asgardeo.io/login
+asgardeo.io,code,,response_type=code,https://accounts.asgardeo.io/authenticationendpoint/login.do?client_id=CONSOLE&code_challenge=8TluGqVvltVsk58SUaqvNMFoqKnQWcdUzhsQaWlseEM&code_challenge_method=S256&commonAuthCallerPath=%2Foauth2%2Fauthorize&forceAuth=false&passiveAuth=false&redirect_uri=https%3A%2F%2Fconsole.asgardeo.io&response_mode=query&response_type=code&scope=openid+openid+SYSTEM+profile+email&state=request_0&t=carbon.super&sessionDataKey=89e175ed-62a2-444c-a8c7-507145b09635&relyingParty=CONSOLE&type=oidc&sp=Console&spId=dc4182ad-d4c7-4a49-b389-c2edff29455d&isSaaSApp=true,
 askcerto.com,none,,,https://demo.askcerto.com,https://demo.askcerto.com/
 askclara.com,jwt,yes,gis_credential,https://app.askclara.com/login,https://app.askclara.com/login
 astratarot.net,none,,,https://app.astratarot.net,https://app.astratarot.net/auth
@@ -61,7 +61,7 @@ dreadnode.io,none,,,https://dreadnode.io/login,https://dreadnode.io/login
 e2b.dev,none,,,https://e2b.dev/login,https://console.e2b.dev/login?flow=f41edddc-9dfd-4821-a714-f7174577a9c3
 eaglemountain.ai,none,,,https://eaglemountain.ai/login,https://eaglemountain.ai/login
 echoiottek.com,none,,,https://echoiottek.com/login,https://echoiottek.com/login
-emergent.sh,google_unknown,,gsi_only,https://emergent.sh/login,https://emergent.sh/login
+emergent.sh,code,,response_type=code,https://app.emergent.sh/landing/,
 engrate.io,none,,,https://app.engrate.io/,https://console.engrate.io/dashboard
 eq8.ai,none,,,https://eq8.ai/login,https://eq8.ai/login
 everlab.com.au,none,,,https://app.everlab.com.au/?itm_source=homepage&itm_medium=navbar,https://app.everlab.com.au/login?redirect=%2Foverview
@@ -77,7 +77,7 @@ gc.ai,none,,,https://app.gc.ai,https://app.gc.ai/auth/sign-in?return=%2F
 general.legal,none,,,https://portal.general.legal/,https://portal.general.legal/
 generalcompute.com,none,,,https://app.generalcompute.com/,https://accounts.generalcompute.com/sign-in?redirect_url=https%3A%2F%2Fapp.generalcompute.com%2F
 genspark.ai,code,,response_type=code,https://genspark.ai/login,https://login.genspark.ai/gensparkad.onmicrosoft.com/b2c_1_new_login/oauth2/v2.0/authorize?client_id=536a4e98-fd24-4cbc-a67b-417e209e0080&response_type=code&redirect_uri=https%3A%2F%2Fwww.genspark.ai%2Fapi%2Fauth&scope=email+offline_access+openid+profile&state=CTgXAsbZVROHeqvy&code_challenge=Ww5adb38xnoLUkKzU3oyJJYZlJ8zODkzv1biYIo6qtY&code_challenge_method=S256&nonce=179bbcca800c233821ba6fd264efbcaa63d9a60910a371eb8e08c22dcd68ad4a&client_info=1&prompt=login
-genstore.ai,token,yes,initTokenClient,https://genstore.ai/login,
+genstore.ai,jwt,yes,gis_id:accounts.id.initialize,https://www.genstore.ai/login,
 getbluejay.ai,none,,,https://app.getbluejay.ai/auth/login,https://app.getbluejay.ai/auth/login
 getclera.com,none,,,https://getclera.com/login,https://www.getclera.com/login
 getlilac.com,none,,,https://console.getlilac.com,https://console.getlilac.com/signin?redirect=%2F
@@ -111,7 +111,7 @@ li.fi,none,,,https://li.fi/login,https://li.fi/login
 lightbringer.com,none,,,https://app.lightbringer.com/signup,https://app.lightbringer.com/signup
 listenlabs.ai,none,,,https://listenlabs.ai/auth,https://listenlabs.ai/auth
 livid.com,none,,,https://livid.com/login,https://livid.com/login
-lovart.ai,code,,response_type=code,https://lovart.ai/login,
+lovart.ai,code,,response_type=code,https://www.lovart.ai/login,
 luckybevco.com,none,,,https://luckybevco.com/login,https://luckybevco.com/login
 luel.ai,none,,,https://luel.ai/login,https://www.luel.ai/vpn-blocked?from=%2Flogin&reason=datacenter
 lyceum.technology,none,,,https://dashboard.lyceum.technology,https://dashboard.lyceum.technology/
@@ -125,7 +125,7 @@ mavenagi.com,none,,,https://accounts.mavenagi.com/u/login/,https://accounts.mave
 maxima.ai,none,,,http://app.maximahq.com/,https://app.maximahq.com/login
 mecagent.com,none,,,,
 mem0.ai,none,,,https://app.mem0.ai/login,https://app.mem0.ai/login
-mercor.com,token,yes,initTokenClient,https://work.mercor.com/login?utm_source=mercor_site&utm_medium=direct&utm_campaign=platform&attributionId=aab6b405-5d4f-460e-9cbc-5852c4bf0fd2,
+mercor.com,code,,response_type=code,https://work.mercor.com/login,
 meritfirst.us,none,,,,
 miniswap.gg,none,,,https://miniswap.gg/login,https://miniswap.gg/login
 minitap.ai,none,,,https://app.minitap.ai,https://app.minitap.ai/login?redirect_to=%2F
@@ -186,7 +186,7 @@ seapoint.co,none,,,https://seapoint.app,https://seapoint.app/
 searchable.com,none,,,https://app.searchable.com/login,https://app.searchable.com/login
 sent.dm,none,,,https://app.sent.dm/auth,https://app.sent.dm/auth
 sfcompute.com,none,,,https://sfcompute.com/login,https://authkit.sfcompute.com/?client_id=client_01JWKNPC0MCT2Q7YS4HQPS50Q2&redirect_uri=https%3A%2F%2Fsfcompute.com%2Fauth%2Fcallback&state=Fe26.2*1*a257c612393aa4e9f2396dd7909a9e05499d170456ad47bb6fa2f8120cbaf007*TVxiGKPVjC2gH87NX-5Qww*tNkDHO6jG6RmiOmKBpJUlTJYDsZ83yFVdU3Fugb6GydKUetLsm0IRrkeJ-L2doIVRPCJNcax3H0l80H5TEzMIwlk4ecXiF0SGUXDdyunzgzSkB9nIiIYbd_pbMxj75Ha-kssUlLayX3A16leOjf60qf1QH0x9Jw7ryMkmUCkOtD7kobLmHbBPbLSzapPbF1T*1787537087656*d243613ece65c1b12ffb945031ae0276b02542fb3f8ce0493fa8983f1a1090ff*EJyhFWrDZ9AMvMaRgHqq-cfGnqpK__VSqboOutTrsMo%7E2&authorization_session_id=01M0RQME0E8M5P7EB1XSMNQGK9
-sheet0.com,code,,response_type=code,https://sheet0.com/login,
+sheet0.com,code,,response_type=code,https://www.sheet0.com/login,
 shopgarage.com,none,,,https://shopgarage.com/login,https://www.shopgarage.com/login
 shorta.com,none,,,https://account.shorta.com/auth/sign-in,https://account.shorta.com/auth/sign-in
 silicondata.com,none,,,https://silicondata.com/login,https://www.silicondata.com/login

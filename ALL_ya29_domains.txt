@@ -5,7 +5,6 @@ crunchbase.com
 dexatel.com
 eneba.com
 fairmoove.fr
-genstore.ai
 getstake.com
 giblib.com
 gruposalinas.com
@@ -13,7 +12,6 @@ jobpixel.com
 kuvrd.ca
 labelyourdata.com
 marblepay.com
-mercor.com
 motionapp.com
 myshef.com
 mytime.com

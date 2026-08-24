@@ -82,6 +82,14 @@ def analyze(browser, domain, login_url):
             rtype = resp.request.resource_type
             if rtype not in ("script", "fetch", "xhr", "document"):
                 return
+            # CRITICAL: never read Google-hosted libraries — the gsi/client bundle
+            # itself contains all of initTokenClient/initCodeClient/accounts.id, so
+            # reading it would falsely match every flow. Only the SITE'S OWN code
+            # calls exactly one of them, and that is the real signal.
+            host = urlparse(u).netloc.lower()
+            if any(h in host for h in ("accounts.google.com", "apis.google.com",
+                                        "gstatic.com", "googleapis.com", "google.com/gsi")):
+                return
             if not (u.endswith(".js") or "javascript" in (resp.headers.get("content-type", "")) or rtype == "script"):
                 return
             if total[0] > 8_000_000:
