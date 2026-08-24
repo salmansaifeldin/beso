@@ -28,6 +28,9 @@ INIT_TOKEN = re.compile(r"oauth2\.initTokenClient|\binitTokenClient\b", re.I)
 INIT_CODE = re.compile(r"oauth2\.initCodeClient|\binitCodeClient\b", re.I)
 GIS_ID = re.compile(r"accounts\.id\.(?:initialize|prompt|renderButton)|g_id_onload|"
                     r"data-client_id|accounts\.google\.com/gsi/(?:iframe/select|status|button)", re.I)
+GIS_ANY = re.compile(r"accounts\.google\.com/gsi|google\.accounts\.(?:id|oauth2)|"
+                     r"accounts\.google\.com/o/oauth2|apis\.google\.com/js/(?:platform|api)|"
+                     r"g_id_onload|data-client_id", re.I)
 from urllib.parse import urlparse, parse_qs
 
 
@@ -57,7 +60,10 @@ def classify(js_blob, rtypes):
         return "code", "response_type=code"
     if INIT_CODE.search(js_blob):
         return "code", "initCodeClient"
-    return "google_unknown", "gsi_only"
+    # distinguish "Google present but flow not captured" from "no Google at all"
+    if GIS_ANY.search(js_blob):
+        return "google_unknown", "gsi_only"
+    return "none", ""
 
 
 def analyze(browser, domain, login_url):
@@ -156,9 +162,19 @@ def main():
             continue
         parts = l.split(",", 1)
         pairs.append((parts[0], parts[1] if len(parts) > 1 else f"https://{parts[0]}/login"))
-    out = open(sys.argv[2], "w", newline="")
+    outfile = sys.argv[2]
+    done = set()
+    if os.path.exists(outfile):
+        for r in csv.reader(open(outfile)):
+            if r and r[0] != "domain":
+                done.add(r[0])
+    pairs = [(d, u) for d, u in pairs if d not in done]
+    newfile = not os.path.exists(outfile)
+    out = open(outfile, "a", newline="")
     w = csv.writer(out)
-    w.writerow(["domain", "category", "confirmed", "evidence", "login_url", "final_url"])
+    if newfile:
+        w.writerow(["domain", "category", "confirmed", "evidence", "login_url", "final_url"])
+        out.flush()
     with sync_playwright() as p:
         b = make_browser(p)
         for i, (d, lu) in enumerate(pairs):

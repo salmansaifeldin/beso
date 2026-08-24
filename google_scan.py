@@ -297,7 +297,7 @@ def find_google_button(page):
     return None, ""
 
 
-def analyze(browser, domain, verbose=False):
+def analyze(browser, domain, verbose=False, seed_url=None):
     ev = {"domain": domain, "category": "none", "confirmed": "",
           "evidence": "", "login_url": "", "final_url": ""}
     ctx = browser.new_context(ignore_https_errors=True, user_agent=UA,
@@ -358,8 +358,10 @@ def analyze(browser, domain, verbose=False):
             if reach(base, page):
                 login_url = get_login_url(page, domain)
                 break
-        # 2. candidate login urls
+        # 2. candidate login urls (a caller-provided seed URL is tried first)
         cands = []
+        if seed_url:
+            cands.append(seed_url)
         if login_url:
             cands.append(login_url)
         cands += [f"https://{domain}/login", f"https://{domain}/signin"]
@@ -521,14 +523,21 @@ def main():
     outfile = sys.argv[2] if len(sys.argv) > 2 else "pw_results.csv"
     verbose = "-v" in sys.argv
     with open(infile) as f:
-        domains = [l.strip() for l in f if l.strip()]
+        # each line is "domain" or "domain,seed_login_url"
+        entries = []
+        for l in f:
+            l = l.strip()
+            if not l:
+                continue
+            parts = l.split(",", 1)
+            entries.append((parts[0], parts[1] if len(parts) > 1 else None))
     done = set()
     if os.path.exists(outfile):
         with open(outfile) as f:
             for row in csv.reader(f):
                 if row:
                     done.add(row[0])
-    todo = [d for d in domains if d not in done]
+    todo = [(d, s) for (d, s) in entries if d not in done]
     newfile = not os.path.exists(outfile)
 
     with sync_playwright() as p:
@@ -539,7 +548,7 @@ def main():
             if newfile:
                 w.writerow(["domain", "category", "confirmed", "evidence", "login_url", "final_url"])
                 out.flush()
-            for d in todo:
+            for d, seed in todo:
                 # periodic recycle to bound memory
                 if since >= RECYCLE_EVERY:
                     try:
@@ -549,7 +558,7 @@ def main():
                     browser = make_browser(p)
                     since = 0
                 try:
-                    ev = analyze(browser, d, verbose=verbose)
+                    ev = analyze(browser, d, verbose=verbose, seed_url=seed)
                 except Exception as e:
                     # browser/context likely died: relaunch and retry once
                     try:
@@ -559,7 +568,7 @@ def main():
                     try:
                         browser = make_browser(p)
                         since = 0
-                        ev = analyze(browser, d, verbose=verbose)
+                        ev = analyze(browser, d, verbose=verbose, seed_url=seed)
                     except Exception as e2:
                         ev = {"domain": d, "category": "none", "confirmed": "",
                               "evidence": "ERR2:" + str(e2)[:40], "login_url": "",

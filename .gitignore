@@ -114,3 +114,7 @@ gsi_m.txt
 gsi_m_out.csv
 gsi_last.txt
 gsi_last_out.csv
+urls_raw.txt
+urls_pairs.txt
+r2_unknown.txt
+r2_unknown_out.csv
