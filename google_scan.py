@@ -484,8 +484,33 @@ LAUNCH_ARGS = [
 RECYCLE_EVERY = 40  # relaunch the browser periodically to avoid memory bloat
 
 
+import glob as _glob
+
+
+def _chromium_path():
+    # Prefer an explicit override, else use the pre-installed browser bundle.
+    envp = os.environ.get("CHROMIUM_BIN")
+    if envp and os.path.exists(envp):
+        return envp
+    for pat in ("/opt/pw-browsers/chromium-*/chrome-linux/chrome",
+                "/opt/pw-browsers/chromium/chrome-linux/chrome"):
+        hits = sorted(_glob.glob(pat))
+        if hits:
+            return hits[-1]
+    return None
+
+
 def make_browser(p):
-    return p.chromium.launch(headless=True, args=LAUNCH_ARGS)
+    exe = _chromium_path()
+    kw = {"headless": True, "args": LAUNCH_ARGS}
+    if exe:
+        kw["executable_path"] = exe
+    # Route Chromium through the environment's outbound proxy if one is set,
+    # otherwise external navigations get ERR_CONNECTION_RESET.
+    prox = os.environ.get("HTTPS_PROXY") or os.environ.get("HTTP_PROXY")
+    if prox:
+        kw["proxy"] = {"server": prox}
+    return p.chromium.launch(**kw)
 
 
 def main():
