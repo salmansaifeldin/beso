@@ -85,3 +85,13 @@ gtest.txt
 grate_out.csv
 stucktest.txt
 stucktest_out.csv
+newg_raw.txt
+scan_work_u/
+val2.txt
+val2_out.csv
+hfval*.txt
+hfval*.csv
+lp.log
+smoke.txt
+smoke_out.csv
+pww.html
