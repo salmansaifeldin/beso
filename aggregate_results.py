@@ -20,7 +20,10 @@ WD = sys.argv[1] if len(sys.argv) > 1 else "scan_work_g"
 EXPECTED = int(sys.argv[2]) if len(sys.argv) > 2 else 0
 
 done = {}
-sources = [f"{WD}/_master.csv"] + sorted(glob.glob(f"{WD}/out_*.csv")) + [f"{WD}/tail_out.csv"]
+# Sources: the live shard outputs in the work dir, plus the already-aggregated
+# evidence CSV (so results can be rebuilt even after the work dir is cleaned up).
+sources = ([f"{WD}/_master.csv"] + sorted(glob.glob(f"{WD}/out_*.csv"))
+           + [f"{WD}/tail_out.csv", "google_sso_results.csv"])
 for fn in sources:
     if not os.path.exists(fn):
         continue
