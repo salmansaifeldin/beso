@@ -130,3 +130,8 @@ urls2_pairs.txt
 r3_unk.txt
 r3_unk_out.csv
 scan_work_r3/
+urls3_raw.txt
+urls3_pairs.txt
+r4_unk.txt
+r4_unk_out.csv
+scan_work_r4/

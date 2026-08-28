@@ -3,6 +3,7 @@ claap.io
 claned.com
 crunchbase.com
 dexatel.com
+due-diligence.ilumin.ai
 eneba.com
 fairmoove.fr
 getstake.com
@@ -12,6 +13,7 @@ jobpixel.com
 kuvrd.ca
 labelyourdata.com
 marblepay.com
+margex.com
 motionapp.com
 myshef.com
 mytime.com

@@ -12,6 +12,8 @@ alison.com
 alongside.com
 amplitude.com
 amuse.io
+app.cpay.world
+app.decisionrules.io
 app.nansen.ai
 arative.com
 arbio.com
@@ -26,6 +28,7 @@ beatstars.com
 beelivery.com
 behuman.health
 bitmart.com
+bizlist.gr
 bloomboxco.com
 blossomsocial.com
 blueberrypediatrics.com
@@ -69,6 +72,7 @@ designcrowd.com
 dialpad.com
 dokbot.io
 domainmoney.com
+duckcheck.com
 echoar.xyz
 edenai.co
 edexa.io
@@ -250,9 +254,11 @@ thunkable.com
 timescale.com
 tipli.cz
 toggl.com
+toletglobe.in
 tooljet.com
 transfergo.com
 trip.com
+trontrace.com
 trustedhousesitters.com
 trybeam.com
 tubularlabs.com
@@ -264,6 +270,7 @@ uptime.app
 upvendo.com
 usage.ai
 usebeam.co
+usedeed.com
 usepastel.com
 userleap.com
 users.wix.com
