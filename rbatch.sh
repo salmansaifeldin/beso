@@ -1,6 +1,7 @@
 #!/bin/bash
+# Parallel DEEP resolver (resolve_gsi) over a "domain,login_url" list.
 cd /home/user/beso
-DUR="${1:-560}"; WD=scan_work_r; SRC=urls_pairs.txt
+DUR="${1:-560}"; WD="${2:-scan_work_r}"; SRC="${3:-urls_pairs.txt}"
 mkdir -p "$WD"; export FAST=1
 python3 - "$WD" "$SRC" <<'PY'
 import csv, glob, os, sys
@@ -19,20 +20,21 @@ print(f"remaining={len(rem)}")
 PY
 timeout "$DUR" bash -c '
 export FAST=1
+WD="'"$WD"'"
 for i in $(seq 0 7); do
-  python3 /home/user/beso/resolve_gsi.py "scan_work_r/shard_$i.txt" "scan_work_r/out_$i.csv" >>"scan_work_r/log_$i.txt" 2>&1 &
+  python3 /home/user/beso/resolve_gsi.py "$WD/shard_$i.txt" "$WD/out_$i.csv" >>"$WD/log_$i.txt" 2>&1 &
 done
 wait
 '
-python3 - <<'PY'
-import csv, glob, os
+python3 - "$WD" <<'PY'
+import csv, glob, os, sys
 from collections import Counter
-done={}
-for fn in sorted(glob.glob("scan_work_r/out_*.csv")):
+WD=sys.argv[1]; done={}
+for fn in sorted(glob.glob(f"{WD}/out_*.csv")):
     for r in csv.reader(open(fn)):
         if r and r[0]!="domain" and len(r)>=2: done[r[0]]=r
 c=Counter(r[1] for r in done.values())
-print("==== RBATCH ===="); print(f"done={len(done)}/79")
+print("==== RBATCH ===="); print(f"done={len(done)}")
 print(f"jwt={c.get('jwt',0)} token={c.get('token',0)} code={c.get('code',0)} unknown={c.get('google_unknown',0)} none={c.get('none',0)}")
-print(f"WANT(jwt+ya29)={c.get('jwt',0)+c.get('token',0)}")
+print(f"WANT={c.get('jwt',0)+c.get('token',0)}")
 PY
