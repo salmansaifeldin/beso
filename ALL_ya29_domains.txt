@@ -1,4 +1,9 @@
+app.lightdash.cloud
+app.parallellearning.com
+app.spline.design
+app.triplewhale.com
 appewa.com
+chat.linqalpha.com
 claap.io
 claned.com
 crunchbase.com
@@ -19,7 +24,9 @@ myshef.com
 mytime.com
 pcloud.com
 pinpointanalytics.ai
+ringg.ai
 schole.ai
+seaart.ai
 simplified.co
 sosovalue.com
 tenantcloud.com

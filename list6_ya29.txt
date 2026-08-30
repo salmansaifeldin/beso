@@ -1,0 +1,7 @@
+app.lightdash.cloud
+app.parallellearning.com
+app.spline.design
+app.triplewhale.com
+chat.linqalpha.com
+ringg.ai
+seaart.ai

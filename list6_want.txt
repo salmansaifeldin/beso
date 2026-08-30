@@ -1,0 +1,10 @@
+app.lightdash.cloud
+app.parallellearning.com
+app.spline.design
+app.triplewhale.com
+chat.linqalpha.com
+client.a.team
+cloud.vessl.ai
+meshy.ai
+ringg.ai
+seaart.ai
