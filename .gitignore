@@ -140,3 +140,8 @@ urls4_pairs.txt
 r5_unk.txt
 r5_unk_out.csv
 scan_work_r5/
+urls5_raw.txt
+urls5_pairs.txt
+r6_unk.txt
+r6_unk_out.csv
+scan_work_r6/

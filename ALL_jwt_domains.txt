@@ -3,7 +3,9 @@
 abhibus.com
 abonesepeti.com
 accountablehq.com
+accounts.graphext.com
 adalo.com
+admin.last.app
 admin.moralis.com
 aftership.com
 agilityads.com
@@ -14,7 +16,10 @@ amplitude.com
 amuse.io
 app.cpay.world
 app.decisionrules.io
+app.naga.com
 app.nansen.ai
+app.playtomic.com
+app.sesametime.com
 arative.com
 arbio.com
 armoire.style
@@ -44,12 +49,15 @@ cakap.com
 calendar.com
 canditech.io
 casafari.com
+cataloniahotels.com
 ceipal.com
 celtx.com
 centaurlabs.com
 cgtrader.com
+chat.luzia.com
 chefsplate.com
 chintai.io
+civitatis.com
 cl.ly
 claralabs.com
 cleancoders.com
@@ -57,12 +65,15 @@ clickup.com
 client.a.team
 climate.ai
 cloud.vessl.ai
+coach.ballogy.com
 cobiro.com
 cognifit.com
 coins.ph
 confettisweets.ca
 conserv.io
 coordinatehq.com
+couple.ai
+creator.exlyapp.com
 credly.com
 crewhomeapp.com
 curiousthing.io
@@ -175,6 +186,7 @@ mygoodtrust.com
 myperch.io
 nansen.ai
 ncx.com
+nebenan.de
 ninox.com
 ninoxdb.de
 northflank.com
@@ -195,6 +207,7 @@ phemex.com
 picterra.ch
 plaace.co
 pollfish.com
+portal.village.health
 poshmark.com
 practicebetter.io
 privyr.com
@@ -232,6 +245,7 @@ sourcetable.com
 sowntogrow.com
 spiking.com
 spinn.com
+spotahome.com
 spyne.ai
 starstable.com
 startupfon.com
@@ -259,6 +273,7 @@ tipli.cz
 toggl.com
 toletglobe.in
 tooljet.com
+tradingview.com
 transfergo.com
 trip.com
 trontrace.com
@@ -266,6 +281,7 @@ trustedhousesitters.com
 trybeam.com
 tubularlabs.com
 tutorful.co.uk
+uk.wallapop.com
 uniplaces.com
 upflow.io
 uppbeat.io
