@@ -1,0 +1,8 @@
+app.airtm.com
+app.nbx.com
+app.sayanchor.com
+app.sprig.com
+bitrefill.com
+oauth.blockpass.org
+orangex.com
+tipranks.com

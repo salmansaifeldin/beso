@@ -3,6 +3,7 @@ app.parallellearning.com
 app.spline.design
 app.triplewhale.com
 appewa.com
+bitrefill.com
 chat.linqalpha.com
 claap.io
 claned.com
@@ -26,6 +27,7 @@ margex.com
 motionapp.com
 myshef.com
 mytime.com
+oauth.blockpass.org
 pcloud.com
 pinpointanalytics.ai
 ringg.ai

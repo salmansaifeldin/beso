@@ -14,12 +14,16 @@ alison.com
 alongside.com
 amplitude.com
 amuse.io
+app.airtm.com
 app.cpay.world
 app.decisionrules.io
 app.naga.com
 app.nansen.ai
+app.nbx.com
 app.playtomic.com
+app.sayanchor.com
 app.sesametime.com
+app.sprig.com
 arative.com
 arbio.com
 armoire.style
@@ -196,6 +200,7 @@ okcoin.com
 oliveboard.in
 olympe.io
 onpay.com
+orangex.com
 ourpath.co.uk
 packgene.com
 pactima.com
@@ -270,6 +275,7 @@ thrivemarket.com
 thunkable.com
 timescale.com
 tipli.cz
+tipranks.com
 toggl.com
 toletglobe.in
 tooljet.com
