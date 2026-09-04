@@ -150,3 +150,5 @@ urls6_pairs.txt
 r7_unk.txt
 r7_unk_out.csv
 scan_work_r7/
+big_domains.txt
+scan_work_big/
