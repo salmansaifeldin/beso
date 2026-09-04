@@ -161,3 +161,8 @@ big_want.txt
 big_gsi_unconfirmed.txt
 big_unk_in.txt
 scan_work_bigunk/
+urls7_raw.txt
+urls7_pairs.txt
+r8_unk.txt
+r8_unk_out.csv
+scan_work_r8/
