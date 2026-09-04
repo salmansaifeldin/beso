@@ -152,3 +152,8 @@ r7_unk_out.csv
 scan_work_r7/
 big_domains.txt
 scan_work_big/
+big_jwt.txt
+big_ya29.txt
+big_code.txt
+big_unknown.txt
+big_results.csv
