@@ -168,3 +168,10 @@ r8_unk_out.csv
 scan_work_r8/
 emailfirst_in.txt
 scan_work_ef/
+big2_regs.txt
+big2_domains.txt
+big2_deep_in.txt
+b2_unk.txt
+b2_unk_out.csv
+scan_work_big2/
+scan_work_big2d/
