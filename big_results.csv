@@ -3082,7 +3082,7 @@ denon.com,none,,,https://www.denon.com/en-us/login,https://www.denon.com/en-us/l
 denverwestbusinesspark.com,none,,,,
 denverwestofficepark.com,none,,ERR:unreachable,,
 depazeo.ca,none,,ERR:unreachable,,
-deriv.com,google_unknown,,gsi_only,https://home.deriv.com/dashboard/login?lang=en,https://home.deriv.com/dashboard/login?lang=en
+deriv.com,code,,response_type=code(emailfirst),,
 deriv.partners,none,,,https://deriv.partners/login,https://home.deriv.com/partners-app/splash
 derivws.com,code,,response_type=code,https://home.deriv.com/dashboard/login?lang=en,
 derwent-drug-file.com,none,,ERR:unreachable,,

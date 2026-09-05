@@ -129,6 +129,32 @@ def analyze(browser, domain, login_url):
                     break
             except Exception:
                 pass
+        # email-first nudge: many apps hide the Google button until an email is
+        # entered. If we still have no OAuth signal, type a dummy email, submit,
+        # then look for the Google button again.
+        if not rtypes and os.environ.get("EMAILFIRST", "1") == "1":
+            try:
+                em = page.locator("input[type=email], input[name*=email i], input[id*=email i], input[autocomplete=username]").first
+                if em.count() > 0:
+                    em.fill("test.user@gmail.com", timeout=2500)
+                    for cont in ["button:has-text('Continue')", "button:has-text('Next')",
+                                 "button[type=submit]", "text=/continue/i", "text=/next/i"]:
+                        try:
+                            c = page.locator(cont).first
+                            if c.count() > 0:
+                                c.click(timeout=2500); page.wait_for_timeout(2800); break
+                        except Exception:
+                            pass
+                    for sel in ["text=/continue with google/i", "text=/sign in with google/i",
+                                "[aria-label*=Google i]", "[class*=google i]", "button:has-text('Google')"]:
+                        try:
+                            loc = page.locator(sel).first
+                            if loc.count() > 0:
+                                loc.click(timeout=2500); page.wait_for_timeout(2500); break
+                        except Exception:
+                            pass
+            except Exception:
+                pass
         # also trigger a gsi button iframe if present
         try:
             for fr in page.frames:
