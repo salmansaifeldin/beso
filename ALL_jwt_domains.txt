@@ -15,11 +15,13 @@ alongside.com
 amplitude.com
 amuse.io
 app.airtm.com
+app.codeable.io
 app.cpay.world
 app.decisionrules.io
 app.naga.com
 app.nansen.ai
 app.nbx.com
+app.pievat.com
 app.playtomic.com
 app.sayanchor.com
 app.sesametime.com
@@ -141,6 +143,8 @@ governmentjobs.com
 guidetoiceland.is
 guiker.com
 habitaclia.com
+handyhand.dk
+happyhelper.dk
 heapanalytics.com
 heygen.com
 heymarket.com
@@ -180,6 +184,7 @@ korukids.co.uk
 landgate.com
 launchdarkly.com
 league.com
+legaldesk.dk
 letsenhance.io
 letstranzact.com
 level365.com
@@ -245,6 +250,7 @@ perufederalsavings.com
 phemex.com
 picterra.ch
 plaace.co
+platform.easytranslate.com
 playcanv.as
 pollfish.com
 portal.village.health
