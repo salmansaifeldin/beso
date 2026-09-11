@@ -191,3 +191,8 @@ bb_domains.txt
 scan_work_bb/
 bb_unk_in.txt
 scan_work_bbunk/
+ru_raw.txt
+ru_domains.txt
+scan_work_ru/
+gone_ru.sh
+giso_ru.sh
