@@ -35,6 +35,7 @@ atari.com
 atlassian.com
 audiomack.com
 babylist.com
+balsamiq.com
 bankbazaar.com
 bany.dev
 basicops.com
@@ -44,6 +45,7 @@ behuman.health
 binance.com
 bitbucket.org
 bitmart.com
+bitrue.com
 bizlist.gr
 blofin.com
 bloomboxco.com
@@ -115,6 +117,7 @@ empiricalspirits.co
 englishcentral.com
 evernote.com
 execthread.com
+exmo.com
 facer.io
 farsightvision.com
 fedml.ai
@@ -179,6 +182,7 @@ june.energy
 justcall.io
 justpark.com
 kayak.com
+kcex.com
 kino.studio
 kittl.com
 korukids.co.uk
@@ -190,6 +194,7 @@ letsenhance.io
 letstranzact.com
 level365.com
 leveredge.org
+levex.com
 lingvist.io
 linkedin.com
 livedatatechnologies.com
@@ -229,6 +234,7 @@ myperch.io
 nansen.ai
 ncx.com
 nebenan.de
+nicehash.com
 ninox.com
 ninoxdb.de
 northflank.com
@@ -332,6 +338,7 @@ tealhq.com
 theladders.com
 thrivemarket.com
 thunkable.com
+tickets.kz
 timescale.com
 tipli.cz
 tipranks.com
@@ -374,6 +381,7 @@ vool.com
 warpstream.com
 weecare.co
 whatnot.com
+whitebit.com
 wishi.me
 withwayfinder.com
 wizehire.com
@@ -391,4 +399,5 @@ zeet.co
 zentist.io
 zerocater.com
 ziphq.com
+zoomex.com
 zoosk.com

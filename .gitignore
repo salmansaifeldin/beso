@@ -189,3 +189,5 @@ r10_unk_out.csv
 scan_work_r10/
 bb_domains.txt
 scan_work_bb/
+bb_unk_in.txt
+scan_work_bbunk/
