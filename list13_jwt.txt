@@ -1,0 +1,5 @@
+app.plus500.com
+longbridge.com
+novadax.com.br
+trade.rails.xyz
+vauld.com

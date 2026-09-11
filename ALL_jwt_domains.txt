@@ -24,6 +24,7 @@ app.nansen.ai
 app.nbx.com
 app.pievat.com
 app.playtomic.com
+app.plus500.com
 app.sayanchor.com
 app.sesametime.com
 app.sprig.com
@@ -201,6 +202,7 @@ livedatatechnologies.com
 liveplan.com
 localazy.com
 login.eposnowhq.com
+longbridge.com
 lyst.com
 madhappy.com
 magzter.com
@@ -239,6 +241,7 @@ ninox.com
 ninoxdb.de
 northflank.com
 northhanm.com
+novadax.com.br
 novakidschool.com
 nuadu.com
 okcoin.com
@@ -346,6 +349,7 @@ toggl.com
 tokopedia.com
 toletglobe.in
 tooljet.com
+trade.rails.xyz
 tradingview.com
 transfergo.com
 trip.com
@@ -369,6 +373,7 @@ usepastel.com
 userleap.com
 users.wix.com
 uxcam.com
+vauld.com
 veestro.com
 velasca.com
 venue.live

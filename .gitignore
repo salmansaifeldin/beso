@@ -196,3 +196,8 @@ ru_domains.txt
 scan_work_ru/
 gone_ru.sh
 giso_ru.sh
+urls10_raw.txt
+urls10_pairs.txt
+r11_unk.txt
+r11_unk_out.csv
+scan_work_r11/
