@@ -187,3 +187,5 @@ urls9_pairs.txt
 r10_unk.txt
 r10_unk_out.csv
 scan_work_r10/
+bb_domains.txt
+scan_work_bb/
