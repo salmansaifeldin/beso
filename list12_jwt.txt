@@ -1,0 +1,2 @@
+app.manago.ai
+pocket.health

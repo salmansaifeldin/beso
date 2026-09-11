@@ -18,6 +18,7 @@ app.airtm.com
 app.codeable.io
 app.cpay.world
 app.decisionrules.io
+app.manago.ai
 app.naga.com
 app.nansen.ai
 app.nbx.com
@@ -252,6 +253,7 @@ picterra.ch
 plaace.co
 platform.easytranslate.com
 playcanv.as
+pocket.health
 pollfish.com
 portal.village.health
 poshmark.com

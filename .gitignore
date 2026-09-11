@@ -182,3 +182,8 @@ r9_unk_out.csv
 scan_work_r9/
 one_in.txt
 one_out.csv
+urls9_raw.txt
+urls9_pairs.txt
+r10_unk.txt
+r10_unk_out.csv
+scan_work_r10/
