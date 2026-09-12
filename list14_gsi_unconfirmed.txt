@@ -1,0 +1,7 @@
+account.minimax.io
+app.cialfo.co
+app.impt.io
+app.peaks.com
+app.thefabricant.com
+auth.skuad.io
+blendle.com
