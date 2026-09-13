@@ -2,6 +2,7 @@
 99.co
 abhibus.com
 abonesepeti.com
+account.qapla.it
 accountablehq.com
 accounts.foyr.com
 accounts.graphext.com
@@ -179,6 +180,7 @@ hotelscombined.com
 housecallpro.com
 houzz.com
 humanz.ai
+id.codemotion.com
 idp.revers.io
 ifttt.com
 incrediblehq.com
@@ -270,6 +272,7 @@ oliveboard.in
 olympe.io
 onpay.com
 orangex.com
+osteocom.me
 ourpath.co.uk
 packgene.com
 pactima.com
@@ -401,6 +404,7 @@ uxcam.com
 vauld.com
 veestro.com
 velasca.com
+ventis.com
 venue.live
 verifiable.com
 viberate.com
@@ -410,10 +414,12 @@ virpp.com
 visible.vc
 vool.com
 warpstream.com
+web.accountable.eu
 weecare.co
 whale-login.stage.meetwhale.com
 whatnot.com
 whitebit.com
+wikicasa.it
 wishi.me
 withwayfinder.com
 wizehire.com
