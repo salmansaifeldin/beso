@@ -1,0 +1,12 @@
+app.assoconnect.com
+app.circula.com
+app.expensya.com
+app.vaia.com
+auth.abtasty.com
+blinkist.com
+covermanager.com
+finn.com
+haagrico.com.vn
+idp.revers.io
+miscota.es
+vicegolf.com

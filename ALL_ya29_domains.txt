@@ -1,6 +1,10 @@
 amlbot.com
+and-charge.com
 app.adgoji.com
 app.due.network
+app.feather-insurance.com
+app.getvoiceline.com
+app.latana.com
 app.lightdash.cloud
 app.nextmatter.com
 app.nous.co
@@ -20,7 +24,9 @@ coinbase.com
 console.zenadmin.ai
 crunchbase.com
 dashboard.boxo.io
+dashboard.cufinder.io
 dashboard.paywithatoa.co.uk
+dashboard.xmoney.com
 deezer.com
 dexatel.com
 due-diligence.ilumin.ai
@@ -51,6 +57,8 @@ onestepgps.com
 oreosea.com
 pcloud.com
 pinpointanalytics.ai
+platform.workmotion.com
+remind.me
 ringg.ai
 schole.ai
 seaart.ai

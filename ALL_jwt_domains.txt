@@ -16,10 +16,13 @@ alongside.com
 amplitude.com
 amuse.io
 app.airtm.com
+app.assoconnect.com
 app.channable.com
+app.circula.com
 app.codeable.io
 app.cpay.world
 app.decisionrules.io
+app.expensya.com
 app.manago.ai
 app.naga.com
 app.nansen.ai
@@ -31,6 +34,7 @@ app.sayanchor.com
 app.sesametime.com
 app.sprig.com
 app.staircase.ai
+app.vaia.com
 arative.com
 arbio.com
 armoire.style
@@ -38,6 +42,7 @@ askclara.com
 atari.com
 atlassian.com
 audiomack.com
+auth.abtasty.com
 auth.wetransfer.com
 babylist.com
 balsamiq.com
@@ -53,6 +58,7 @@ bitbucket.org
 bitmart.com
 bitrue.com
 bizlist.gr
+blinkist.com
 blofin.com
 bloomboxco.com
 blossomsocial.com
@@ -98,6 +104,7 @@ confettisweets.ca
 conserv.io
 coordinatehq.com
 couple.ai
+covermanager.com
 creator.exlyapp.com
 credly.com
 crewhomeapp.com
@@ -132,6 +139,7 @@ ferryhopper.com
 fieldpulse.com
 finder.com
 fing.com
+finn.com
 fitbod.me
 fluentbe.com
 flyiin.com
@@ -154,6 +162,7 @@ gotcourts.com
 governmentjobs.com
 guidetoiceland.is
 guiker.com
+haagrico.com.vn
 habitaclia.com
 handyhand.dk
 happyhelper.dk
@@ -170,6 +179,7 @@ hotelscombined.com
 housecallpro.com
 houzz.com
 humanz.ai
+idp.revers.io
 ifttt.com
 incrediblehq.com
 indorse.io
@@ -231,6 +241,7 @@ milanuncios.com
 mindful.care
 mindtrip.ai
 miro.com
+miscota.es
 momentranks.com
 momondo.com
 mondee.com
@@ -393,6 +404,7 @@ velasca.com
 venue.live
 verifiable.com
 viberate.com
+vicegolf.com
 viravira.co
 virpp.com
 visible.vc
