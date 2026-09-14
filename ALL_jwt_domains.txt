@@ -90,6 +90,7 @@ chat.luzia.com
 checkfelix.com
 chefsplate.com
 chintai.io
+cityvox.fr
 civitatis.com
 cl.ly
 claralabs.com
@@ -116,6 +117,7 @@ databox.com
 deliveroo.co.uk
 dentulu.com
 depositphotos.com
+deriv.com
 designcrowd.com
 dialpad.com
 dietly.pl
@@ -132,6 +134,8 @@ edrone.me
 edu-nation.net
 empiricalspirits.co
 englishcentral.com
+etoro.com
+etorox.com
 evernote.com
 execthread.com
 exmo.com
@@ -230,6 +234,7 @@ liveplan.com
 localazy.com
 login.eposnowhq.com
 longbridge.com
+loom.com
 lyst.com
 madhappy.com
 magzter.com
@@ -309,6 +314,7 @@ promptops.com
 purchasingplatform.com
 qatalog.com
 querypal.com
+qype.fr
 raddon.com
 rafflee.co.uk
 ratehub.ca
@@ -388,6 +394,7 @@ tooljet.com
 trade.rails.xyz
 tradingview.com
 transfergo.com
+treatwell.es
 trip.com
 trontrace.com
 trustedhousesitters.com
