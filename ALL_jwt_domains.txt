@@ -6,6 +6,7 @@ account.qapla.it
 accountablehq.com
 accounts.foyr.com
 accounts.graphext.com
+accounts.ikas.com
 adalo.com
 admin.last.app
 admin.moralis.com
@@ -186,6 +187,7 @@ ifttt.com
 incrediblehq.com
 indorse.io
 infoset.app
+insta360.com
 instacart.com
 instapage.com
 interfolio.com
@@ -197,6 +199,7 @@ inyova.com
 io-market.com
 jambb.com
 jobillico.com
+jobtoday.com
 joinrise.co
 judy.legal
 june.energy
@@ -394,6 +397,7 @@ upflow.io
 uppbeat.io
 uptime.app
 upvendo.com
+us.narwal.com
 usage.ai
 usebeam.co
 usedeed.com
@@ -401,6 +405,7 @@ usepastel.com
 userleap.com
 users.wix.com
 uxcam.com
+v2.aiva.ai
 vauld.com
 veestro.com
 velasca.com
@@ -412,6 +417,7 @@ vicegolf.com
 viravira.co
 virpp.com
 visible.vc
+vivense.com
 vool.com
 warpstream.com
 web.accountable.eu
@@ -428,6 +434,7 @@ wuolah.com
 wyzant.com
 x.com
 xolo.io
+yamap.com
 ynab.com
 youcruit.com
 yousician.com
