@@ -235,3 +235,6 @@ hv_test_out.csv
 scan_work_hidden/
 unconf_recheck.csv
 hidden_none_ambiguous.txt
+scan_work_hidden_ya/
+HIDDEN_ya29_sso.txt
+hidden_ya_none.txt
