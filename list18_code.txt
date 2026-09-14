@@ -1,0 +1,10 @@
+app.bitrise.io
+app.dataddo.com
+app.digitoo.ai
+app.readmio.com
+app.robosizeme.com
+app.roihunter.com
+app.smartlook.com
+app.superscale.com
+id.kyivstar.ua
+login.duvo.ai

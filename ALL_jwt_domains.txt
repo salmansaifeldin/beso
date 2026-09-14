@@ -119,6 +119,7 @@ depositphotos.com
 designcrowd.com
 dialpad.com
 dietly.pl
+docs.craft.do
 docsend.com
 dokbot.io
 domainmoney.com
@@ -147,6 +148,7 @@ fluentbe.com
 flyiin.com
 fonbnk.com
 foodvisor.io
+forclassmates.com
 funderbeam.com
 futurestay.com
 genstore.ai
@@ -169,6 +171,7 @@ habitaclia.com
 handyhand.dk
 happyhelper.dk
 heapanalytics.com
+hedepy.com
 heygen.com
 heymarket.com
 heymax.ai
@@ -292,9 +295,11 @@ plaace.co
 platform.easytranslate.com
 playcanv.as
 pocket.health
+poetizer.com
 polarsteps.com
 pollfish.com
 pollo.ai
+portal.blockmate.io
 portal.village.health
 poshmark.com
 practicebetter.io
@@ -419,6 +424,7 @@ virpp.com
 visible.vc
 vivense.com
 vool.com
+voxabooks.com
 warpstream.com
 web.accountable.eu
 weecare.co

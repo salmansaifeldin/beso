@@ -61,6 +61,7 @@ pinpointanalytics.ai
 platform.workmotion.com
 remind.me
 ringg.ai
+roksh.com
 schole.ai
 seaart.ai
 simplified.co
@@ -78,3 +79,4 @@ veed.io
 vyrill.com
 w4games.co
 woox.io
+xeropan.com
