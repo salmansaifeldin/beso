@@ -230,3 +230,7 @@ scan_work_r16/
 recheck18.txt
 scan_work_rc/
 all_unconfirmed.txt
+hv_test.txt
+hv_test_out.csv
+scan_work_hidden/
+unconf_recheck.csv
