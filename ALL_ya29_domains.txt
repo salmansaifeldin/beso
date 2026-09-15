@@ -1,6 +1,7 @@
 amlbot.com
 and-charge.com
 app.adgoji.com
+app.bayzat.com
 app.due.network
 app.feather-insurance.com
 app.getvoiceline.com
@@ -15,6 +16,8 @@ appewa.com
 bitrefill.com
 blockchain.com
 blockchain.info
+brandsforless.com
+buyer.trymala.com
 chat.linqalpha.com
 citymapper.com
 claap.io
@@ -25,8 +28,10 @@ console.zenadmin.ai
 crunchbase.com
 dashboard.boxo.io
 dashboard.cufinder.io
+dashboard.mamopay.com
 dashboard.paywithatoa.co.uk
 dashboard.xmoney.com
+dashboard.zid.sa
 deezer.com
 dexatel.com
 due-diligence.ilumin.ai
@@ -35,6 +40,7 @@ employer.bossjob.com
 eneba.com
 exness.com
 fairmoove.fr
+feelvaleo.com
 flipboard.com
 getstake.com
 giblib.com
@@ -44,6 +50,7 @@ jobpixel.com
 kartaview.org
 kuvrd.ca
 labelyourdata.com
+lokalee.app
 lookiero.co.uk
 make.org
 mansa.com
@@ -65,9 +72,11 @@ ringg.ai
 roksh.com
 schole.ai
 seaart.ai
+seller.trymala.com
 simplified.co
 sosovalue.com
 sportal.sentinelprotocol.io
+stayqstay.com
 tapbit.com
 tenantcloud.com
 therealest.com
@@ -77,6 +86,7 @@ trendyol.com
 urfx.io
 usebump.com
 veed.io
+vuz.com
 vyrill.com
 w4games.co
 woox.io

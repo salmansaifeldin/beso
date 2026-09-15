@@ -32,6 +32,7 @@ app.nbx.com
 app.pievat.com
 app.playtomic.com
 app.plus500.com
+app.qashio.com
 app.sayanchor.com
 app.sesametime.com
 app.sprig.com
@@ -45,6 +46,7 @@ atari.com
 atlassian.com
 audiomack.com
 auth.abtasty.com
+auth.tenderd.com
 auth.wetransfer.com
 babylist.com
 balsamiq.com
@@ -134,6 +136,7 @@ edrone.me
 edu-nation.net
 empiricalspirits.co
 englishcentral.com
+entravel.com
 etoro.com
 etorox.com
 evernote.com
@@ -214,6 +217,7 @@ justcall.io
 justpark.com
 kayak.com
 kcex.com
+keepface.com
 kino.studio
 kittl.com
 korukids.co.uk
@@ -283,6 +287,7 @@ oliveboard.in
 olympe.io
 onpay.com
 orangex.com
+osnplus.com
 osteocom.me
 ourpath.co.uk
 packgene.com
@@ -299,6 +304,7 @@ picterra.ch
 plaace.co
 platform.easytranslate.com
 playcanv.as
+playgama.com
 pocket.health
 poetizer.com
 polarsteps.com
@@ -311,6 +317,7 @@ practicebetter.io
 privyr.com
 proguides.com
 promptops.com
+propertyfinder.ae
 purchasingplatform.com
 qatalog.com
 querypal.com
@@ -352,6 +359,7 @@ sidekicker.com.au
 skillstruck.com
 slacker.com
 solstice.us
+soum.sa
 soundcloud.com
 sourcetable.com
 sowntogrow.com
@@ -361,6 +369,7 @@ spotahome.com
 spyne.ai
 starstable.com
 startupfon.com
+starzplay.com
 stonly.com
 storyblocks.com
 stripo.email
@@ -394,6 +403,7 @@ tooljet.com
 trade.rails.xyz
 tradingview.com
 transfergo.com
+traveloka.com
 treatwell.es
 trip.com
 trontrace.com
