@@ -1,0 +1,5 @@
+console.fynd.com
+pegasus.imarticus.org
+pocketfm.com
+sso.plumhq.com
+web.thndr.app
