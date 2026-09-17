@@ -1,0 +1,4 @@
+domain,flow,confirmed,evidence,login_url,final_url
+hyperiondev.com,code,,response_type=code,https://www.hyperiondev.com/account/login/,
+offerzen.com,code,,response_type=code,https://www.offerzen.com/users/sign_in,
+sweepsouth.com,google_unknown,,gsi_only,https://sweepsouth.com/accounts/login,
