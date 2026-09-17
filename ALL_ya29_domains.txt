@@ -13,6 +13,7 @@ app.parallellearning.com
 app.spline.design
 app.triplewhale.com
 appewa.com
+apps.jelou.ai
 bitrefill.com
 blockchain.com
 blockchain.info
@@ -51,6 +52,8 @@ jobpixel.com
 kartaview.org
 kuvrd.ca
 labelyourdata.com
+laika.com.co
+livup.com.br
 lokalee.app
 lookiero.co.uk
 make.org

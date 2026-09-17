@@ -1,0 +1,13 @@
+app.8arm.io
+app.omie.com.br
+app.onfly.com
+auth.houm.com
+clients.gobetterfly.com
+dashboard.azos.com.br
+id.morada.ai
+id.y.uno
+login.superlogica.net
+login.treinta.co
+nuvemshop.com.br
+plataforma.logcomex.io
+teachy.com.br
