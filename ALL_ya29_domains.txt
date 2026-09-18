@@ -7,6 +7,7 @@ app.feather-insurance.com
 app.getvoiceline.com
 app.latana.com
 app.lightdash.cloud
+app.morphoses.io
 app.nextmatter.com
 app.nous.co
 app.parallellearning.com
@@ -33,6 +34,7 @@ dashboard.mamopay.com
 dashboard.paywithatoa.co.uk
 dashboard.xmoney.com
 dashboard.zid.sa
+dazn.com
 deezer.com
 dexatel.com
 due-diligence.ilumin.ai

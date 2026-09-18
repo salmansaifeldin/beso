@@ -13,6 +13,7 @@ admin.moralis.com
 aftership.com
 agilityads.com
 aixplain.com
+alice.si
 alison.com
 alongside.com
 amplitude.com
@@ -35,6 +36,7 @@ app.plus500.com
 app.qashio.com
 app.sayanchor.com
 app.sesametime.com
+app.shodeck.com
 app.sprig.com
 app.staircase.ai
 app.vaia.com
@@ -115,6 +117,7 @@ credly.com
 crewhomeapp.com
 curiousthing.io
 dash.ai
+dash.beyondwords.io
 databox.com
 deliveroo.co.uk
 dentulu.com
@@ -188,6 +191,7 @@ homaio.com
 homethrive.com
 homezada.com
 honeybook.com
+horizon.options-it.com
 hostgator.com.br
 hotelscombined.com
 housecallpro.com
@@ -320,6 +324,7 @@ portal.blockmate.io
 portal.village.health
 poshmark.com
 practicebetter.io
+private.currencybird.cl
 privyr.com
 proguides.com
 promptops.com
@@ -343,6 +348,7 @@ resmed.co.id
 resmed.la
 resmed.ph
 resmed.vn
+respondent.survey54.com
 retrium.com
 ripio.com
 ripplematch.com
@@ -351,6 +357,7 @@ rocketlane.com
 runwayml.com
 safetywing.com
 sayweee.com
+school.eedi.com
 screenapp.io
 secondnature.io
 securityscorecard.io
