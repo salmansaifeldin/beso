@@ -100,3 +100,5 @@ vyrill.com
 w4games.co
 woox.io
 xeropan.com
+auth-app.waresix.com
+guard.io

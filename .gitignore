@@ -263,3 +263,6 @@ urls20_pairs.txt
 r21_unk.txt
 r21_unk_out.csv
 scan_work_r21/
+scan_work_*/
+urls*_pairs.txt
+urls*_raw.txt
