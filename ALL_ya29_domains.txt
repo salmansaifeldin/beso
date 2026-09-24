@@ -102,3 +102,7 @@ woox.io
 xeropan.com
 auth-app.waresix.com
 guard.io
+feverup.com
+home.color.com
+lucid.app
+www.tango.me
