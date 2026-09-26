@@ -110,3 +110,5 @@ app.deel.com
 hq1.appsflyer.com
 www.chobani.com
 www.pacaso.com
+simplywall.st
+www.rugser.com

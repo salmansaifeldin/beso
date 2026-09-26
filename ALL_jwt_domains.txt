@@ -499,3 +499,8 @@ app.dataminr.com
 dashboard.backflip.com
 suno.com
 www.buzzfeed.com
+admin.carson.live
+app.prod.fooji.com
+superuser.app
+tnuck.com
+trendlyne.com

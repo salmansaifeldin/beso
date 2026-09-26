@@ -1,0 +1,7 @@
+app.gopassage.com
+auth.wellnesscoach.live
+dashboard.foreman.mn
+platform.evvnt.com
+platformeleven.io
+resonate.linqia.com
+thryve.kr
