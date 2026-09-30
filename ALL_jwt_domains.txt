@@ -504,3 +504,6 @@ app.prod.fooji.com
 superuser.app
 tnuck.com
 trendlyne.com
+eu.clevver.io
+fainin.com
+www.meinauto.de

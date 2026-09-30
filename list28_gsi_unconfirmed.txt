@@ -1,0 +1,2 @@
+app.flowkey.com
+login.fryd.app
