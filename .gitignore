@@ -266,3 +266,6 @@ scan_work_r21/
 scan_work_*/
 urls*_pairs.txt
 urls*_raw.txt
+scan_work_*_run.log
+urls*_gpairs.txt
+urls*_mspairs.txt
