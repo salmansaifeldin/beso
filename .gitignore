@@ -269,3 +269,5 @@ urls*_raw.txt
 scan_work_*_run.log
 urls*_gpairs.txt
 urls*_mspairs.txt
+deep_pairs.txt
+ms_pairs.txt
