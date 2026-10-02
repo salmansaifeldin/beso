@@ -331,3 +331,6 @@ zocks.io
 zoom.us
 zoominfo.com
 zucca.ai
+axi.be
+easyfairs.com
+workero.com
