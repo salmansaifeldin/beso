@@ -2,7 +2,6 @@
 cd /home/user/beso
 DUR="${1:-1700}"; WD="${2:-scan_work_deep}"; SRC="${3:-deep_pairs.txt}"
 mkdir -p "$WD"
-pkill -9 -f "chrome-linux/chrome" 2>/dev/null; sleep 1
 python3 - "$WD" "$SRC" <<'PY'
 import csv, glob, os, sys
 WD,SRC=sys.argv[1],sys.argv[2]
