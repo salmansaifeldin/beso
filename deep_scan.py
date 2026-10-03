@@ -60,7 +60,7 @@ LOGIN_LINK=re.compile(r"(log[\s\-]?in|sign[\s\-]?in|sign[\s\-]?up|/account|/auth
 
 def analyze(browser, domain):
     ctx=browser.new_context(ignore_https_errors=True, user_agent=UA, viewport={"width":1280,"height":900})
-    ctx.set_default_navigation_timeout(18000); ctx.set_default_timeout(4500)
+    ctx.set_default_navigation_timeout(11000); ctx.set_default_timeout(4500)
     rtypes=[]; js=[]; ms_net=[False]; total=[0]
     def on_req(r):
         u=r.url
@@ -97,6 +97,8 @@ def analyze(browser, domain):
                     except: pass
             except: pass
 
+    import time as _t
+    deadline=_t.time()+26   # hard per-domain wall-clock budget
     # 1) homepage first; discover real login links
     cands=[]
     try:
@@ -123,6 +125,7 @@ def analyze(browser, domain):
     # 2) probe login candidates, early-exit on strong signal
     if not strong():
         for u in probe[:4]:
+            if _t.time()>deadline: break
             try:
                 pg.goto(u, wait_until="domcontentloaded"); pg.wait_for_timeout(2500)
                 reached=True
