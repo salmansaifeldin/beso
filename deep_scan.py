@@ -27,6 +27,17 @@ G_AUTH=re.compile(r"accounts\.google\.com/o/oauth2/(?:v2/)?auth", re.I)
 G_GSI=re.compile(r"accounts\.google\.com/gsi/(?:button|select|iframe|fedcm|status)", re.I)
 MS_AUTH_REQ=re.compile(r"login\.microsoftonline\.com|login\.microsoftonline\.us|login\.windows\.net|"
                        r"login\.live\.com|[a-z0-9\-]+\.b2clogin\.com|[a-z0-9\-]+\.ciamlogin\.com", re.I)
+# SAFE JS signals: an actual oauth2 CALL with an object literal + a real client_id,
+# and NOT the @react-oauth library (which bundles both call sites for every flow).
+# This recovers recall for button-wired initTokenClient / initCodeClient flows
+# (popup-based, whose request we often cannot capture) WITHOUT the false positives,
+# because the reported-false domains had no real call / no client_id.
+# NOTE: accounts.id.* / g_id_onload (One Tap) is deliberately NOT trusted from JS —
+# it auto-prompts and is frequently dormant (that was a false-positive source).
+INIT_TOKEN_CALL=re.compile(r"(?:oauth2\.)?initTokenClient\s*\(\s*\{", re.I)
+INIT_CODE_CALL=re.compile(r"(?:oauth2\.)?initCodeClient\s*\(\s*\{", re.I)
+REACT_OAUTH=re.compile(r"@react-oauth|react-oauth", re.I)
+CLIENT_ID=re.compile(r"[0-9]{6,}-[a-z0-9]+\.apps\.googleusercontent\.com", re.I)
 LOGIN_LINK=re.compile(r"(log[\s\-]?in|sign[\s\-]?in|sign[\s\-]?up|/account|/auth|/users/sign|get[\s\-]?started|register|anmelden|connexion)", re.I)
 
 G_SEL=["text=/continue with google/i","text=/sign ?in with google/i","text=/log ?in with google/i",
@@ -40,7 +51,7 @@ M_SEL=["text=/continue with microsoft/i","text=/sign ?in with microsoft/i","text
 def analyze(browser, domain):
     ctx=browser.new_context(ignore_https_errors=True, user_agent=UA, viewport={"width":1280,"height":900})
     ctx.set_default_navigation_timeout(11000); ctx.set_default_timeout(4500)
-    gauth=[]; ggsi=[False]; msauth=[False]
+    gauth=[]; ggsi=[False]; msauth=[False]; js=[]; total=[0]
     def on_req(r):
         u=r.url
         if G_AUTH.search(u):
@@ -52,7 +63,17 @@ def analyze(browser, domain):
             try: nav=r.is_navigation_request()
             except Exception: nav=False
             if nav or r.resource_type=="document": msauth[0]=True
-    ctx.on("request",on_req)
+    def on_resp(resp):
+        try:
+            u=resp.url; host=urlparse(u).netloc.lower(); rtype=resp.request.resource_type
+            if rtype not in ("script","document"): return
+            if any(h in host for h in ("accounts.google.com","apis.google.com","gstatic.com","googleapis.com")): return
+            if total[0]>8_000_000: return
+            b=resp.text()
+            if b and ("initTokenClient" in b or "initCodeClient" in b or "googleusercontent" in b):
+                js.append(b); total[0]+=len(b)
+        except: pass
+    ctx.on("request",on_req); ctx.on("response",on_resp)
     pg=ctx.new_page()
     used=""; reached=False
     deadline=time.time()+28
@@ -111,7 +132,7 @@ def analyze(browser, domain):
     except Exception:
         pass
     probe=[c for c in cands[:3]]
-    for p in ["login","signin","sign-in","account/login","users/sign_in"]:
+    for p in ["login","signin","sign-in","sign-up","signup","register","account/login","users/sign_in","app/login","account"]:
         u=f"https://{domain}/{p}"
         if u not in probe: probe.append(u)
     if not found():
@@ -127,13 +148,19 @@ def analyze(browser, domain):
     ctx.close()
     if not reached:
         return [domain,"unreachable","","unreachable","",""]
-    # GOOGLE verdict — only from a real IdP request
+    # GOOGLE verdict
     gcat,gev="none",""
     rts=set(gauth)
+    blob="\n".join(js)
     if "id_token" in rts: gcat,gev="jwt","req:response_type=id_token"
     elif "token" in rts: gcat,gev="token","req:response_type=token"
     elif "code" in rts: gcat,gev="code","req:response_type=code"
     elif ggsi[0] or "gsi" in rts: gcat,gev="jwt","req:gsi_onetap"
+    # SAFE JS fallback for button-wired popup flows we couldn't capture live:
+    elif INIT_TOKEN_CALL.search(blob) and CLIENT_ID.search(blob) and not REACT_OAUTH.search(blob):
+        gcat,gev="token","js:initTokenClient_call+client_id"
+    elif INIT_CODE_CALL.search(blob) and CLIENT_ID.search(blob) and not REACT_OAUTH.search(blob):
+        gcat,gev="code","js:initCodeClient_call+client_id"
     # MICROSOFT verdict — only from a real redirect to the MS IdP
     mscat,msev=("microsoft","req:ms_redirect") if msauth[0] else ("none","")
     return [domain,gcat,gev,mscat,msev,used]
