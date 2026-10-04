@@ -77,7 +77,27 @@ def analyze(browser, domain):
     pg=ctx.new_page()
     used=""; reached=False
     deadline=time.time()+28
-    g_ok=[False]; ms_ok=[False]
+    g_ok=[False]; ms_ok=[False]; vis_g=[False]; vis_ms=[False]
+    # A genuinely RENDERED provider button is what a human sees on manual check.
+    # Only count the rendered GIS button iframe (gsi/button), a filled .g_id_signin,
+    # or a short visible text/aria button — NOT #g_id_onload config divs or the
+    # One-Tap prompt card (those were the dormant false-positive source).
+    # ONLY the official Google Identity Services rendered button counts as a visible
+    # signal: the gsi/button iframe or a filled .g_id_signin container. These are
+    # GIS-specific and the dormant false-positive sites never render them. A generic
+    # "...with Google/Microsoft" text match is deliberately NOT used — it produced
+    # false positives (e.g. the word Microsoft in unrelated UI).
+    VIS_JS="""()=>{
+      const vis=e=>{if(!e)return false;const r=e.getBoundingClientRect();return r.width>40&&r.height>14&&e.offsetParent!==null;};
+      let g=false;
+      for(const f of document.querySelectorAll('iframe')){if(/gsi\\/button/.test(f.src||'')&&vis(f))g=true;}
+      for(const e of document.querySelectorAll('.g_id_signin')){if(vis(e)&&e.querySelector('iframe,div[role=button],div'))g=true;}
+      return g?'G':'';
+    }"""
+    def check_vis():
+        try:
+            if 'G' in pg.evaluate(VIS_JS): vis_g[0]=True
+        except: pass
     def g_hits(): return len(gauth)+(1 if ggsi[0] else 0)
     def click_provider(sels, kind):
         """Click a VISIBLE provider button; confirm only if it triggers a real IdP request."""
@@ -108,14 +128,16 @@ def analyze(browser, domain):
                 except: pass
         except: pass
     def scan_page():
+        check_vis()
         # auto One Tap / auto-redirect already captured on load; now click real buttons
         if not g_ok[0]: click_provider(G_SEL,"g")
         if not ms_ok[0]: click_provider(M_SEL,"m")
-        if not (g_ok[0] or ms_ok[0]):
+        if not (g_ok[0] or ms_ok[0] or vis_g[0] or vis_ms[0]):
             reveal_email()
+            check_vis()
             if not g_ok[0]: click_provider(G_SEL,"g")
             if not ms_ok[0]: click_provider(M_SEL,"m")
-    def found(): return g_ok[0] or ms_ok[0] or bool(gauth) or ggsi[0] or msauth[0]
+    def found(): return g_ok[0] or ms_ok[0] or vis_g[0] or vis_ms[0] or bool(gauth) or ggsi[0] or msauth[0]
 
     cands=[]
     try:
@@ -161,7 +183,13 @@ def analyze(browser, domain):
         gcat,gev="token","js:initTokenClient_call+client_id"
     elif INIT_CODE_CALL.search(blob) and CLIENT_ID.search(blob) and not REACT_OAUTH.search(blob):
         gcat,gev="code","js:initCodeClient_call+client_id"
-    # MICROSOFT verdict — only from a real redirect to the MS IdP
+    # VISIBLE rendered Google button (what a human sees) — classify by JS if we can,
+    # else default jwt (a rendered GIS "Sign in with Google" button is id_token).
+    elif vis_g[0]:
+        if INIT_TOKEN_CALL.search(blob) and not REACT_OAUTH.search(blob): gcat,gev="token","visible_button+initTokenClient"
+        elif INIT_CODE_CALL.search(blob) and not REACT_OAUTH.search(blob): gcat,gev="code","visible_button+initCodeClient"
+        else: gcat,gev="jwt","visible_google_button"
+    # MICROSOFT verdict — ONLY a real redirect to the MS IdP (text buttons too noisy)
     mscat,msev=("microsoft","req:ms_redirect") if msauth[0] else ("none","")
     return [domain,gcat,gev,mscat,msev,used]
 
