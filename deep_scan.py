@@ -91,16 +91,27 @@ def analyze(browser, domain):
     # GIS-specific and the dormant false-positive sites never render them. A generic
     # "...with Google/Microsoft" text match is deliberately NOT used — it produced
     # false positives (e.g. the word Microsoft in unrelated UI).
+    # G = official GIS rendered button (reliable -> can back a confirmed verdict).
+    # M = a visible "…with Microsoft" button. MS has no GIS-equivalent reliable
+    # rendered element, and the text match is a bit noisy (iongroup), so M only ever
+    # feeds the CANDIDATE tier, never confirmed.
     VIS_JS="""()=>{
       const vis=e=>{if(!e)return false;const r=e.getBoundingClientRect();return r.width>40&&r.height>14&&e.offsetParent!==null;};
-      let g=false;
+      let g=false,m=false;
       for(const f of document.querySelectorAll('iframe')){if(/gsi\\/button/.test(f.src||'')&&vis(f))g=true;}
       for(const e of document.querySelectorAll('.g_id_signin')){if(vis(e)&&e.querySelector('iframe,div[role=button],div'))g=true;}
-      return g?'G':'';
+      for(const e of document.querySelectorAll('button,a,[role=button]')){
+        const t=(e.innerText||e.getAttribute('aria-label')||'').trim();
+        if(!t||t.length>44||!vis(e))continue;
+        if(/microsoft|azure ?ad|office ?365|entra/i.test(t)&&/sign|log|continue|connect|with/i.test(t))m=true;
+      }
+      return (g?'G':'')+(m?'M':'');
     }"""
     def check_vis():
         try:
-            if 'G' in pg.evaluate(VIS_JS): vis_g[0]=True
+            r=pg.evaluate(VIS_JS)
+            if 'G' in r: vis_g[0]=True
+            if 'M' in r: vis_ms[0]=True
         except: pass
     def g_hits(): return len(gauth)+(1 if ggsi[0] else 0)
     def click_provider(sels, kind):
@@ -220,6 +231,8 @@ def analyze(browser, domain):
         mscat,msev="microsoft","req:ms_redirect"
     elif MSAL_WIRE.search(blob):
         mscat,msev="microsoft_candidate","js:msal_or_msonline_wiring"
+    elif vis_ms[0]:
+        mscat,msev="microsoft_candidate","visible_ms_button(text)"
     else:
         mscat,msev="none",""
     return [domain,gcat,gev,mscat,msev,used]
