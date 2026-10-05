@@ -275,4 +275,4 @@ deep_pairs2.txt
 deep_pairs3.txt
 ya29_check.txt
 chk_*.txt
-re2*_in.txt
+re*_in.txt
