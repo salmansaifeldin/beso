@@ -23,7 +23,7 @@ END=$(( $(date +%s) + DUR ))
 run_one(){
   d="$1"
   printf "%s\n" "$d" > "/tmp/iso_$2.txt"
-  timeout 40 python3 /home/user/beso/deep_scan.py "/tmp/iso_$2.txt" "/tmp/iso_${2}_out.csv" >/dev/null 2>&1
+  timeout 50 python3 /home/user/beso/deep_scan.py "/tmp/iso_$2.txt" "/tmp/iso_${2}_out.csv" >/dev/null 2>&1
   row=$(grep -v "^domain," "/tmp/iso_${2}_out.csv" 2>/dev/null | head -1)
   [ -z "$row" ] && row="$d,err,timeout,none,,"
   echo "$row" >> "$OUT"
