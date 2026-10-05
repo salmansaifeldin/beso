@@ -189,6 +189,14 @@ def analyze(browser, domain):
         if INIT_TOKEN_CALL.search(blob) and not REACT_OAUTH.search(blob): gcat,gev="token","visible_button+initTokenClient"
         elif INIT_CODE_CALL.search(blob) and not REACT_OAUTH.search(blob): gcat,gev="code","visible_button+initCodeClient"
         else: gcat,gev="jwt","visible_google_button"
+    # CANDIDATE tier (NOT confirmed — for manual review): a real oauth2 CALL is
+    # present in first-party JS but the client_id is runtime-injected so we cannot
+    # prove it statically. Recovers real flows (coinbase/lucid/appsflyer-style) that
+    # the strict rule drops, WITHOUT polluting the confirmed list. Kept separate.
+    elif INIT_TOKEN_CALL.search(blob) and not REACT_OAUTH.search(blob):
+        gcat,gev="token_candidate","js:initTokenClient_call(no_literal_client_id)"
+    elif INIT_CODE_CALL.search(blob) and not REACT_OAUTH.search(blob):
+        gcat,gev="code_candidate","js:initCodeClient_call(no_literal_client_id)"
     # MICROSOFT verdict — ONLY a real redirect to the MS IdP (text buttons too noisy)
     mscat,msev=("microsoft","req:ms_redirect") if msauth[0] else ("none","")
     return [domain,gcat,gev,mscat,msev,used]
