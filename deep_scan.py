@@ -38,6 +38,10 @@ INIT_TOKEN_CALL=re.compile(r"(?:oauth2\.)?initTokenClient\s*\(\s*\{", re.I)
 INIT_CODE_CALL=re.compile(r"(?:oauth2\.)?initCodeClient\s*\(\s*\{", re.I)
 REACT_OAUTH=re.compile(r"@react-oauth|react-oauth", re.I)
 CLIENT_ID=re.compile(r"[0-9]{6,}-[a-z0-9]+\.apps\.googleusercontent\.com", re.I)
+# CANDIDATE-tier wiring (any Google/MS auth trace in first-party JS). Used ONLY for
+# the candidate net (manual review), never for the confirmed list.
+GIS_ID_WIRE=re.compile(r"accounts\.id\.(?:initialize|renderButton|prompt)|g_id_onload|data-client_id", re.I)
+MSAL_WIRE=re.compile(r"msal\.js|msal-browser|@azure/msal|PublicClientApplication|login\.microsoftonline\.com|[a-z0-9\-]+\.b2clogin\.com", re.I)
 LOGIN_LINK=re.compile(r"(log[\s\-]?in|sign[\s\-]?in|sign[\s\-]?up|/account|/auth|/users/sign|get[\s\-]?started|register|anmelden|connexion)", re.I)
 
 G_SEL=["text=/continue with google/i","text=/sign ?in with google/i","text=/log ?in with google/i",
@@ -70,13 +74,13 @@ def analyze(browser, domain):
             if any(h in host for h in ("accounts.google.com","apis.google.com","gstatic.com","googleapis.com")): return
             if total[0]>8_000_000: return
             b=resp.text()
-            if b and ("initTokenClient" in b or "initCodeClient" in b or "googleusercontent" in b):
+            if b and re.search(r"initTokenClient|initCodeClient|googleusercontent|accounts\.id\.|g_id_onload|data-client_id|msal|microsoftonline|b2clogin",b,re.I):
                 js.append(b); total[0]+=len(b)
         except: pass
     ctx.on("request",on_req); ctx.on("response",on_resp)
     pg=ctx.new_page()
     used=""; reached=False
-    deadline=time.time()+28
+    deadline=time.time()+42
     g_ok=[False]; ms_ok=[False]; vis_g=[False]; vis_ms=[False]
     # A genuinely RENDERED provider button is what a human sees on manual check.
     # Only count the rendered GIS button iframe (gsi/button), a filled .g_id_signin,
@@ -157,8 +161,13 @@ def analyze(browser, domain):
     for p in ["login","signin","sign-in","sign-up","signup","register","account/login","users/sign_in","app/login","account"]:
         u=f"https://{domain}/{p}"
         if u not in probe: probe.append(u)
+    # reaching-gap fix: many apps host the SSO button on a subdomain (app./login./…)
+    base=domain[4:] if domain.startswith("www.") else domain
+    if base.count(".")<=1:  # only add subdomains for apex domains
+        for sub in ["app","login","my","account","secure","dashboard"]:
+            probe.append(f"https://{sub}.{base}/login")
     if not found():
-        for u in probe[:4]:
+        for u in probe[:9]:
             if time.time()>deadline: break
             try:
                 pg.goto(u, wait_until="domcontentloaded"); pg.wait_for_timeout(2600)
@@ -197,8 +206,17 @@ def analyze(browser, domain):
         gcat,gev="token_candidate","js:initTokenClient_call(no_literal_client_id)"
     elif INIT_CODE_CALL.search(blob) and not REACT_OAUTH.search(blob):
         gcat,gev="code_candidate","js:initCodeClient_call(no_literal_client_id)"
-    # MICROSOFT verdict — ONLY a real redirect to the MS IdP (text buttons too noisy)
-    mscat,msev=("microsoft","req:ms_redirect") if msauth[0] else ("none","")
+    # widest candidate: any One Tap / GIS id wiring present in first-party JS
+    elif GIS_ID_WIRE.search(blob):
+        gcat,gev="jwt_candidate","js:gis_id_wiring"
+    # MICROSOFT verdict — confirmed only on a real redirect; else candidate if MSAL/
+    # microsoftonline wiring is present in first-party JS (manual review).
+    if msauth[0]:
+        mscat,msev="microsoft","req:ms_redirect"
+    elif MSAL_WIRE.search(blob):
+        mscat,msev="microsoft_candidate","js:msal_or_msonline_wiring"
+    else:
+        mscat,msev="none",""
     return [domain,gcat,gev,mscat,msev,used]
 
 
