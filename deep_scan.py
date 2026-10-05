@@ -209,6 +209,11 @@ def analyze(browser, domain):
     # widest candidate: any One Tap / GIS id wiring present in first-party JS
     elif GIS_ID_WIRE.search(blob):
         gcat,gev="jwt_candidate","js:gis_id_wiring"
+    # @react-oauth/google present = the site DOES integrate Google login (the lib's
+    # whole purpose) but bundles every flow, so we can't tell which -> candidate.
+    # Safe: the reported false positives never had react-oauth.
+    elif REACT_OAUTH.search(blob):
+        gcat,gev="google_candidate","js:react-oauth_present"
     # MICROSOFT verdict — confirmed only on a real redirect; else candidate if MSAL/
     # microsoftonline wiring is present in first-party JS (manual review).
     if msauth[0]:
