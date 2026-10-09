@@ -561,4 +561,3 @@ tryspot.app
 droneharmony.com
 houzy.ch
 useraspberry.com
-feldera.com

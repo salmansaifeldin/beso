@@ -24,7 +24,16 @@ UA=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like G
 
 # Real identity-provider REQUEST signatures (these only fire when a flow actually runs)
 G_AUTH=re.compile(r"accounts\.google\.com/o/oauth2/(?:v2/)?auth", re.I)
-G_GSI=re.compile(r"accounts\.google\.com/gsi/(?:button|select|iframe|fedcm|status)", re.I)
+# BUTTON = an explicitly RENDERED GIS "Sign in with Google" button (the site called
+# renderButton): a deliberate client-side id_token (JWT) integration -> confirms jwt.
+G_GSI_BUTTON=re.compile(r"accounts\.google\.com/gsi/button", re.I)
+# ONETAP = a passive One Tap / FedCM prompt (fedcm/select). These auto-fire and are
+# FLAKY, and appear even on Cognito/Auth0-brokered sites whose real sign-in is a CODE
+# redirect (feldera-style false positive). Candidate only — never confirms jwt alone.
+G_GSI_ONETAP=re.compile(r"accounts\.google\.com/gsi/(?:fedcm|select)", re.I)
+# WEAK = One Tap bootstrap (iframe/status). Loads even when dormant. Candidate only,
+# and must NOT short-circuit the scan before the real login is reached.
+G_GSI_WEAK=re.compile(r"accounts\.google\.com/gsi/(?:iframe|status)", re.I)
 MS_AUTH_REQ=re.compile(r"login\.microsoftonline\.com|login\.microsoftonline\.us|login\.windows\.net|"
                        r"login\.live\.com|[a-z0-9\-]+\.b2clogin\.com|[a-z0-9\-]+\.ciamlogin\.com", re.I)
 # SAFE JS signals: an actual oauth2 CALL with an object literal + a real client_id,
@@ -55,14 +64,18 @@ M_SEL=["text=/continue with microsoft/i","text=/sign ?in with microsoft/i","text
 def analyze(browser, domain):
     ctx=browser.new_context(ignore_https_errors=True, user_agent=UA, viewport={"width":1280,"height":900})
     ctx.set_default_navigation_timeout(11000); ctx.set_default_timeout(4500)
-    gauth=[]; ggsi=[False]; msauth=[False]; js=[]; total=[0]
+    gauth=[]; gsi_button=[False]; gsi_onetap=[False]; gsi_weak=[False]; msauth=[False]; js=[]; total=[0]
     def on_req(r):
         u=r.url
         if G_AUTH.search(u):
             rt=(parse_qs(urlparse(u.replace("\\/","/")).query).get("response_type",[""])[0]).lower()
             gauth.append(rt or "gsi")
-        elif G_GSI.search(u):
-            ggsi[0]=True
+        elif G_GSI_BUTTON.search(u):
+            gsi_button[0]=True
+        elif G_GSI_ONETAP.search(u):
+            gsi_onetap[0]=True
+        elif G_GSI_WEAK.search(u):
+            gsi_weak[0]=True
         if MS_AUTH_REQ.search(u):
             try: nav=r.is_navigation_request()
             except Exception: nav=False
@@ -113,7 +126,7 @@ def analyze(browser, domain):
             if 'G' in r: vis_g[0]=True
             if 'M' in r: vis_ms[0]=True
         except: pass
-    def g_hits(): return len(gauth)+(1 if ggsi[0] else 0)
+    def g_hits(): return len(gauth)+(1 if (gsi_button[0] or gsi_onetap[0] or gsi_weak[0]) else 0)
     def click_provider(sels, kind):
         """Click a VISIBLE provider button; confirm only if it triggers a real IdP request."""
         for sel in sels:
@@ -152,7 +165,14 @@ def analyze(browser, domain):
             check_vis()
             if not g_ok[0]: click_provider(G_SEL,"g")
             if not ms_ok[0]: click_provider(M_SEL,"m")
-    def found(): return g_ok[0] or ms_ok[0] or vis_g[0] or vis_ms[0] or bool(gauth) or ggsi[0] or msauth[0]
+    # A One Tap signal (even gsi/button or fedcm) must NOT short-circuit the scan:
+    # many Cognito/Auth0-brokered sites auto-show One Tap on the homepage while the
+    # REAL sign-in is a CODE redirect on a deeper page (feldera/Cognito). We keep
+    # probing so that code is captured too; the verdict ranks code above gsi, so a
+    # brokered site resolves to code (excluded) instead of a false jwt. Only a
+    # captured response_type, a confirmed button click, a visibly-rendered GIS
+    # button, or a real MS redirect ends the scan early.
+    def found(): return g_ok[0] or ms_ok[0] or vis_g[0] or vis_ms[0] or bool(gauth) or msauth[0]
 
     cands=[]
     try:
@@ -197,7 +217,8 @@ def analyze(browser, domain):
     if "id_token" in rts: gcat,gev="jwt","req:response_type=id_token"
     elif "token" in rts: gcat,gev="token","req:response_type=token"
     elif "code" in rts: gcat,gev="code","req:response_type=code"
-    elif ggsi[0] or "gsi" in rts: gcat,gev="jwt","req:gsi_onetap"
+    # An explicitly RENDERED GIS button is a deliberate client-side id_token flow.
+    elif gsi_button[0]: gcat,gev="jwt","req:gsi_button"
     # SAFE JS fallback for button-wired popup flows we couldn't capture live:
     elif INIT_TOKEN_CALL.search(blob) and CLIENT_ID.search(blob) and not REACT_OAUTH.search(blob):
         gcat,gev="token","js:initTokenClient_call+client_id"
@@ -220,6 +241,14 @@ def analyze(browser, domain):
     # widest candidate: any One Tap / GIS id wiring present in first-party JS
     elif GIS_ID_WIRE.search(blob):
         gcat,gev="jwt_candidate","js:gis_id_wiring"
+    # A bare One Tap bootstrap (iframe/status) OR an oauth2/auth hit with no captured
+    # response_type: GIS is present but we never saw a rendered button, an active
+    # credential selection, or a real token — and the actual login may be a CODE
+    # redirect we could not reach. Candidate only (feldera/Cognito was a false jwt here).
+    elif gsi_onetap[0]:
+        gcat,gev="jwt_candidate","gsi_onetap_fedcm_only(flaky)"
+    elif gsi_weak[0] or "gsi" in rts:
+        gcat,gev="jwt_candidate","gsi_onetap_bootstrap_only"
     # @react-oauth/google present = the site DOES integrate Google login (the lib's
     # whole purpose) but bundles every flow, so we can't tell which -> candidate.
     # Safe: the reported false positives never had react-oauth.
