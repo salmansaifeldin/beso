@@ -23,9 +23,9 @@ PHASE1_EP=["/OA_HTML/AppsLocalLogin.jsp","/OA_HTML/OA.jsp","/OA_HTML/RF.jsp"]
 # configurator, so those are excluded here to kill path-reflection false positives).
 MARK=re.compile(r"Oracle E-Business|E-Business Suite|/OA_MEDIA/|oracle\.apps\.|"
                 r"oracle\.jsp\.fnd|FndCommonMessages|oracle\.cabo|OraLogoutRedirect|"
-                r"Copyright \(c\)[^<]{0,40}Oracle|usernameField|passwordField|"
-                r"fndForgotPassword|Oracle Applications|APPS_SSO|GUEST/ORACLE|"
-                r"<!-- Oracle|oabanner|OraBannerText|oracle\.cabo\.ui|xmlns:jtf", re.I)
+                r"Copyright \(c\)[^<]{0,40}Oracle|Oracle Applications|APPS_SSO|"
+                r"GUEST/ORACLE|<!-- Oracle|oabanner|OraBannerText|xmlns:jtf|"
+                r"FNDSSCORP|oracle\.cabo\.ui|/OA_HTML/cabo/|AppsLocalLogin.*Oracle", re.I)
 # EBS login redirect carries these query params; a bare path-echo redirect does not.
 EBS_LOGIN_REDIR=re.compile(r"AppsLocalLogin\.jsp\?.*(requestUrl|cancelUrl|langCode|OAHP|ssousername)", re.I)
 UA={"User-Agent":"Mozilla/5.0 (compatible; recon/1.0)"}
