@@ -1,0 +1,23 @@
+# Oracle E-Business Suite endpoint recon — final results
+# Scanned 46,452 unique hosts from all bug-bounty scope sources
+# (Bugcrowd, HackerOne, Intigriti, YesWeHack, plus subdomain + wildcard lists)
+# across the 11 requested /OA_HTML/ endpoints.
+#
+# Format: host<TAB>endpoint<TAB>final_url
+# A hit requires a genuine Oracle-EBS-specific marker in the response body
+# (/OA_HTML/jsp/fnd/, oracle.apps., FndCommonMessages, FNDSSCORP, /OA_MEDIA/,
+# OraBannerText, xmlns:jtf, "Oracle E-Business", "E-Business Suite", etc.)
+# — generic login-form tokens and path reflections are REJECTED.
+
+external.logitech.com	/OA_HTML/RF.jsp	https://external.logitech.com/OA_HTML/jsp/fnd/fnderror.jsp
+
+# ------------------------------------------------------------------------
+# Candidates rejected (false positives — generic login / SSO pages, 0 Oracle tokens):
+# hl-isygateway.com                     (DRG SSO redirect)
+# mbs-navigator.com                     (Azure B2C "Loading..." SPA)
+# www.mbs-navigator.com                 (Azure B2C "Loading..." SPA)
+# migration.fleetboard.com              (Azure B2C "Loading..." SPA)
+# int.migration.fleetboard.com          (Daimler Azure B2C)
+# snftest02.matrixcare.com              ("SNF - Sign In" page)
+# supplierportale.it.hpe.com            (HPE SSO)
+# supplierportale.wip.it.hpe.com        (HPE SSO)
