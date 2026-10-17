@@ -403,3 +403,6 @@ securitypalhq.com
 checkmarble.com
 goautonomous.io
 meetgradient.com
+asc-es.com
+geologicai.com
+stingray.no
